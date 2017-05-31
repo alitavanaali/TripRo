@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/adapter_hotel_linear"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <LinearLayout
+        android:paddingRight="15dp"
+        android:gravity="right"
+        android:layout_weight="4"
+        android:layout_width="0dp"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/adapter_hotel_name"
+            android:text="جزایر زیبای بالی"
+            android:textSize="@dimen/main_text_size"
+            android:textColor="@color/black"
+            fontPath="font/irsans.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right">
+            <RatingBar
+                android:id="@+id/adapter_hotel_ratingbar"
+                android:stepSize="0.5"
+                android:numStars="10"
+                android:rating="5"
+                android:scaleX="0.6"
+                android:scaleY="0.6"
+                android:isIndicator="true"
+                android:rotation="180"
+                android:layout_margin="10dp"
+                android:progressDrawable="@drawable/custom_ratingbar_selector"
+                android:layout_width="120dp"
+                android:layout_height="24dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/adapter_restaurant_distance"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/card_background_kiloometr_radius"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="23 km"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/main_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="left"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/adapter_hotel_price"
+                android:gravity="right"
+                android:text="219000"
+                android:textSize="@dimen/medium_text_size"
+                fontPath="font/irsans.ttf"
+                android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="هر شب"
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#9e9e9e"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/adapter_hotel_imageview"
+        android:src="@drawable/sample_square"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+
+</LinearLayout>

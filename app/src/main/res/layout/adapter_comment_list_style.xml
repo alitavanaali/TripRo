@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/adapter_hotel_linear"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/card_background_bottom_shadow"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:gravity="right"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/adapter_comment_title"
+            fontPath="font/irsans.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="15dp"
+            android:text="هتلی تمیز با برخوردهای مناسب"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_text_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+            <RatingBar
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:id="@+id/adapter_comment_ratingbar"
+                android:layout_width="120dp"
+                android:layout_height="24dp"
+                android:layout_margin="10dp"
+                android:numStars="10"
+                android:isIndicator="true"
+                android:progressDrawable="@drawable/custom_ratingbar_selector"
+                android:rating="5"
+                android:rotation="180"
+                android:stepSize="0.5" />
+            <TextView
+                android:paddingRight="15dp"
+                android:id="@+id/adapter_comment_date"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="95/12/1" />
+
+
+        </LinearLayout>
+        <at.blogc.android.views.ExpandableTextView
+            android:id="@+id/adapter_comment_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:padding="10dp"
+            android:text="@string/large_farsi"
+            android:textSize="@dimen/main_text_size"
+            app:animation_duration="200" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/adapter_comment_imageview"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/ic_launcher" />
+
+
+</LinearLayout>

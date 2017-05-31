@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar_hotel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/hotels_datepicker_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/card_background"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="9dp">
+            <TextView
+                android:id="@+id/hotels_children"
+                fontPath="font/irsans.ttf"
+                android:gravity="center"
+                android:text="1"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:src="@drawable/female"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/hotels_adault"
+                fontPath="font/irsans.ttf"
+                android:gravity="center"
+                android:text="1"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:src="@drawable/man"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/hotels_room"
+                fontPath="font/irsans.ttf"
+                android:gravity="center"
+                android:text="3"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:src="@drawable/bed"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/hotels_dateviewer"
+            fontPath="font/irsans.ttf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/left_border"
+            android:gravity="center"
+            android:padding="9dp"
+            android:text="96/12/2 - 96/9/2"
+            android:textColor="@color/colorPrimary"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/hotels_sorting_btn"
+            fontPath="font/irsans.ttf"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="left"
+            android:text="مرتب سازی"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/main_text_size" />
+        <TextView
+            android:id="@+id/hotels_sorting_model"
+            fontPath="font/irsans.ttf"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="right"
+            android:text="مرتب سازی: قیمت، نزولی"
+            android:textColor="@color/text_header_color"
+            android:textSize="@dimen/main_text_size" />
+    </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/hotels_listView"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent" />
+</LinearLayout>

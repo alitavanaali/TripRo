@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="240dp"
+    android:background="@color/colorPrimary"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/sample_square"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FFFFFF"/>
+
+    <TextView
+        fontPath="font/irsans.ttf"
+        android:id="@+id/NavigationHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/medium_text_size"
+        android:text="حامد خداوردی"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    <TextView
+        fontPath="font/irsans.ttf"
+        android:id="@+id/NavigationEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="امتیاز: 42" />
+
+</LinearLayout>

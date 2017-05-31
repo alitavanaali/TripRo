@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_marginBottom="45dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/normal_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/flight_mabda_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/card_background_bottom_shadow"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/flight_mabda"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="انتخاب مبدا"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/header_text_size" />
+
+                <TextView
+                    android:id="@+id/flight_mabda_airport"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="فرودگاه مبدا" />
+
+                <TextView
+                    android:id="@+id/flight_mabda_airport_location"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="شهر و کشور مبدا" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/flight_maghsad_lnear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/card_background_bottom_shadow"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/flight_maghsad"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="انتخاب مقصد"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/header_text_size" />
+
+                <TextView
+                    android:id="@+id/flight_maghsad_airport"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="فرودگاه مقصد" />
+
+                <TextView
+                    android:id="@+id/flight_maghsad_airport_location"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="شهر و کشور مقصد" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/flight_day_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/card_background_bottom_shadow"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/flight_day"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="سه شنبه 15/2/96"
+                    android:textSize="@dimen/medium_text_size" />
+
+                <TextView
+                    android:id="@+id/flight_way_type"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="رفت و برگشت" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/card_background_bottom_shadow"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/flight_passenger_numbers"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="4 مسافر"
+                    android:textSize="@dimen/header_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/flight_airplane_type"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="بیزینس کلاس"
+                    android:textSize="@dimen/header_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/flight_search_btn"
+        fontPath="font/irsans.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_green"
+        android:padding="10dp"
+        android:text="جستجو پرواز"
+        android:textColor="@color/white"
+        android:textSize="@dimen/header_text_size" />
+</RelativeLayout>

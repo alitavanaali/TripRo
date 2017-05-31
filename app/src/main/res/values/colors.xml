@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#5a9342</color>
+    <color name="colorPrimaryDark">#33691e</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="app_background">#eeeeee</color>
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="mdtp_accent_color">#558b2f</color>
+    <color name="mdtp_accent_color_dark">#33691e</color>
+    <color name="text_header_color">#616161</color>
+    <color name="restaurant_km_color">#6e616161</color>
+    <color name="holiday_color">#d50000</color>
+</resources>

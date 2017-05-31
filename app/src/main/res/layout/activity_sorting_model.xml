@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_background"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/normal_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            fontPath="font/irsans.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="right"
+            android:drawableLeft="@drawable/ic_monetization_on_grey_700_24dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="قیمت"
+            android:textColor="@color/text_header_color"
+            android:textSize="@dimen/main_text_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_background"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/sorting_price4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="$$$$"
+                android:textSize="@dimen/main_text_size" />
+
+            <Button
+                android:id="@+id/sorting_price3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="$$$"
+                android:textSize="@dimen/main_text_size" />
+
+            <Button
+                android:id="@+id/sorting_price2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="$$"
+                android:textSize="@dimen/main_text_size" />
+
+            <Button
+                android:id="@+id/sorting_price1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="$"
+                android:textSize="@dimen/main_text_size" />
+        </LinearLayout>
+
+        <TextView
+            fontPath="font/irsans.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="30dp"
+            android:gravity="right"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="دسته بندی"
+            android:drawableLeft="@drawable/ic_sort_grey_700_24dp"
+            android:textColor="@color/text_header_color"
+            android:textSize="@dimen/main_text_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/sorting_rotbebandi"
+                fontPath="font/irsans.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_background_bottom_shadow"
+                android:onClick="sortingClicksHandler"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/rotbebandi"
+                android:textAlignment="textStart"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/sorting_masafat"
+                fontPath="font/irsans.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_background_bottom_shadow"
+                android:drawablePadding="10dp"
+                android:onClick="sortingClicksHandler"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/masafat"
+                android:textAlignment="textStart"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/sorting_nozooli"
+                fontPath="font/irsans.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_background_bottom_shadow"
+                android:drawableLeft="@drawable/ic_done_black_24dp"
+                android:drawablePadding="0dp"
+                android:onClick="sortingClicksHandler"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/gheymat_nozooli"
+                android:textAlignment="textStart"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/sorting_soudi"
+                fontPath="font/irsans.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_background_bottom_shadow"
+                android:drawablePadding="10dp"
+                android:onClick="sortingClicksHandler"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/gheymat_soodi"
+                android:textAlignment="textStart"
+                android:textSize="18sp" />
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+    <Button
+        android:id="@+id/sorting_emal_btn"
+        fontPath="font/irsans.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_green"
+        android:padding="10dp"
+        android:text="اعمال"
+        android:textColor="@color/white"
+        android:textSize="@dimen/header_text_size" />
+</RelativeLayout>

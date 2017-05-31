@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/card_backgrond_no_radius"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/adapter_top10_imageview"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:src="@drawable/sample_landscape"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/adapter_top10_place_name"
+        android:text="جزایر زیبای بالی"
+        android:textSize="@dimen/main_text_size"
+        android:textColor="@color/black"
+        android:paddingRight="15dp"
+        fontPath="font/irsans.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/adapter_top10_place_location"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp"
+        android:text="اندونزی، مالزی"
+        fontPath="font/irsans.ttf"
+        android:layout_width="match_parent"
+        android:textColor="#9e9e9e"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

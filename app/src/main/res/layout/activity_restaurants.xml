@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/app_background"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar_restaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/hotels_sorting_btn"
+            fontPath="font/irsans.ttf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="مرتب سازی"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/main_text_size" />
+
+        <TextView
+            android:id="@+id/hotels_sorting_model"
+            fontPath="font/irsans.ttf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="2"
+            android:gravity="right"
+            android:text="مرتب سازی: قیمت، نزولی"
+            android:textColor="@color/text_header_color"
+            android:textSize="@dimen/main_text_size" />
+    </LinearLayout>
+    <ListView
+        android:id="@+id/restaurant_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" />
+
+</LinearLayout>

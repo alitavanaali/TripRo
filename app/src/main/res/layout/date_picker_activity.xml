@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/app_background"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <include
+            layout="@layout/normal_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:drawableRight="@drawable/ic_date_range_grey_700_24dp"
+            android:drawablePadding="10dp"
+            fontPath="font/irsans.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:gravity="right"
+            android:text="@string/vorood_khorooj"
+            android:textSize="@dimen/main_text_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/exit_date_picker_layout"
+                android:background="@drawable/card_backgrond_no_radius"
+                android:padding="15dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/exit_date_textview"
+                    android:textSize="24sp"
+                    android:textColor="@color/colorPrimary"
+                    android:text=" 18 فروردین"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/exit_date_weekday_textview"
+                    android:textSize="@dimen/main_text_size"
+                    android:text="سه شنبه"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/enter_date_picker_layout"
+                android:background="@drawable/card_backgrond_no_radius"
+                android:padding="15dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/enter_date_textview"
+                    android:textSize="24sp"
+                    android:textColor="@color/colorPrimary"
+                    android:text=" 12 فروردین"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/enter_date_weekday_textview"
+                    android:textSize="@dimen/main_text_size"
+                    android:text="سه شنبه"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_backgrond_no_radius"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:padding="15dp"
+            android:orientation="horizontal">
+
+            <pl.polak.clicknumberpicker.ClickNumberPickerView
+                android:id="@+id/room_number_picker"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="40dp"
+                app:picker_corner_radius="0"
+                app:pickers_background_color="@color/colorPrimary"
+                app:min_value = "1"
+                app:max_value = "10"
+                app:value_text_size="24sp"
+                app:decimal_number="0"
+                app:value_background_color="@color/white"
+                app:value_text_color="@color/black"/>
+            <TextView
+                android:text="اتاق"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textAlignment="textStart"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_backgrond_no_radius"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:padding="15dp"
+            android:orientation="horizontal">
+            <pl.polak.clicknumberpicker.ClickNumberPickerView
+                android:id="@+id/adault_number_picker"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="40dp"
+                app:picker_corner_radius="0"
+                app:pickers_background_color="@color/colorPrimary"
+                app:max_value = "10"
+                app:min_value = "1"
+                app:value_text_size="24sp"
+                app:decimal_number="0"
+                app:value_background_color="@color/white"
+                app:value_text_color="@color/black"/>
+            <TextView
+                android:text="بزرگسال"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textAlignment="textStart"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_backgrond_no_radius"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:padding="15dp"
+            android:orientation="horizontal">
+            <pl.polak.clicknumberpicker.ClickNumberPickerView
+                android:id="@+id/children_number_picker"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="40dp"
+                app:picker_corner_radius="0"
+                app:pickers_background_color="@color/colorPrimary"
+                app:max_value = "10"
+                app:value_text_size="24sp"
+                app:decimal_number="0"
+                app:value_background_color="@color/white"
+                app:value_text_color="@color/black"/>
+            <TextView
+                android:text="کودک"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textAlignment="textStart"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:onClick="onBackPressedHandler"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/header_text_size"
+        android:padding="10dp"
+        android:text="تایید"
+        android:background="@drawable/button_green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

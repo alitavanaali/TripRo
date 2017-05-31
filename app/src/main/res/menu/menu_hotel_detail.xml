@@ -1,0 +1,39 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="right"
+    android:layout_gravity="right">
+    <group
+        android:layout_gravity="right"
+        android:checkableBehavior="single"
+        android:gravity="right">
+        <item
+            android:id="@+id/action_profile"
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="@string/action_profile"
+            android:gravity="right"
+            android:layout_gravity="right"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_settings"
+            android:title="@string/action_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:gravity="right"
+            android:layout_gravity="right"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_ertebat"
+            android:title="@string/action_ertebat"
+            android:icon="@drawable/ic_email_black_24dp"
+            android:gravity="right"
+            android:layout_gravity="right"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_info"
+            android:title="@string/action_justro"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:gravity="right"
+            android:layout_gravity="right"
+            app:showAsAction="never" />
+    </group>
+</menu>

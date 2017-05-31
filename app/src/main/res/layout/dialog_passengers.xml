@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_backgrond_no_radius"
+        android:padding="10dp"
+        android:orientation="horizontal">
+        <pl.polak.clicknumberpicker.ClickNumberPickerView
+            android:id="@+id/adault_number_picker"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="40dp"
+            app:picker_corner_radius="0"
+            app:pickers_background_color="@color/colorPrimary"
+            app:max_value = "10"
+            app:min_value = "1"
+            app:value_text_size="24sp"
+            app:decimal_number="0"
+            app:value_background_color="@color/white"
+            app:value_text_color="@color/black"/>
+        <TextView
+            android:text="بزرگسال"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textAlignment="textStart"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_backgrond_no_radius"
+        android:padding="15dp"
+        android:orientation="horizontal">
+        <pl.polak.clicknumberpicker.ClickNumberPickerView
+            android:id="@+id/children_number_picker"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="40dp"
+            app:picker_corner_radius="0"
+            app:pickers_background_color="@color/colorPrimary"
+            app:max_value = "10"
+            app:value_text_size="24sp"
+            app:decimal_number="0"
+            app:value_background_color="@color/white"
+            app:value_text_color="@color/black"/>
+        <TextView
+            android:text="کودک"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textAlignment="textStart"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</LinearLayout>

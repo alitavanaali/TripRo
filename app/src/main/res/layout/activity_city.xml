@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/sample_landscape" />
+
+            <include
+                layout="@layout/toolbar_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/card_background"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="اصفهان"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/header_text_size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ایران"
+                    android:textSize="@dimen/main_text_size" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/card_background"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/main_hotels"
+                fontPath="font/irsans.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_background_bottom_shadow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/hotel"
+                android:paddingRight="10dp"
+                android:text="@string/hotelha"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/main_text_size" />
+
+            <Button
+                android:id="@+id/main_flights"
+                fontPath="font/irsans.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_background_bottom_shadow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/flight"
+                android:paddingRight="10dp"
+                android:text="@string/parvazha"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/main_text_size" />
+
+            <Button
+                android:id="@+id/main_restaurants"
+                fontPath="font/irsans.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_background_bottom_shadow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/restaurants"
+                android:paddingRight="10dp"
+                android:text="@string/resturanha"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/main_text_size" />
+
+            <Button
+                fontPath="font/irsans.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_background_bottom_shadow"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/jazebe"
+                android:paddingRight="10dp"
+                android:text="@string/noghate_didani"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/main_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/card_background"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/shahrhaye_por_bazdid"
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_background_bottom_shadow"
+                android:paddingBottom="15dp"
+                android:text="@string/shahrhaye_por_bazdid_ba_fasele" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/nearby_recyclerview"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

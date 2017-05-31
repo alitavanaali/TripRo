@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar_hotel"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:contentInsetLeft="0dp"
+    app:contentInsetStart="0dp"
+    android:background="?attr/colorPrimary">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="10dp"
+        android:orientation="vertical">
+        <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+        <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="0px"
+            android:layout_height="0px"/>
+        <LinearLayout
+            android:gravity="right"
+            android:foregroundGravity="right"
+            android:orientation="horizontal"
+            android:background="@drawable/card_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/searchbox"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                fontPath="font/irsans.ttf"
+                android:textAlignment="textStart"
+                android:padding="15dp"
+                android:hint="اصفهان" />
+
+            <TextView
+                android:id="@+id/hotels_backbtn"
+                fontPath="font/irsans.ttf"
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size"
+                android:gravity="center"
+                android:onClick="onBackPressedHandler"
+                android:paddingRight="10dp"
+                android:drawableRight="@drawable/back"
+                android:drawablePadding="5dp"
+                android:text="هتل ها"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.Toolbar>

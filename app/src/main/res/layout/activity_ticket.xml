@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/app_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        layout="@layout/normal_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        app:layout_collapseMode="pin"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/card_background_bottom_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:tabTextColor="@color/black"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            fontPath="font/irsans.ttf"
+            app:tabTextAppearance="@style/CustomTabTextSryle"
+            app:tabMode="fixed"
+            app:tabGravity="fill">
+        </android.support.design.widget.TabLayout>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/ticket_natije_textvew"
+        fontPath="font/irsans.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:text="@string/natije_az"
+        android:textColor="@color/text_header_color"
+        />
+    <ListView
+        android:background="@color/white"
+        android:id="@+id/ticket_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

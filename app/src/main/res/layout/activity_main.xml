@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/app_background"
+            android:orientation="vertical"
+            tools:context="alitavana.com.tripadvisor.activity.MainActivity">
+
+            <include
+                layout="@layout/toolbar_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/card_background"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:text="@string/main_jostojoo_header"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/main_text_size" />
+
+                <TextView
+                    android:id="@+id/main_location"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/card_background"
+                    android:drawableStart="@drawable/ic_my_location_black_24dp"
+                    android:padding="10dp"
+                    android:textSize="@dimen/main_text_size" />
+
+                <LinearLayout
+                    android:id="@+id/main_datepicker_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/card_background"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="9dp">
+
+                        <TextView
+                            android:id="@+id/main_children"
+                            fontPath="font/irsans.ttf"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="1" />
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/female" />
+
+                        <TextView
+                            android:id="@+id/main_adault"
+                            fontPath="font/irsans.ttf"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="1" />
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/man" />
+
+                        <TextView
+                            android:id="@+id/main_room"
+                            fontPath="font/irsans.ttf"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="3" />
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/bed" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/main_dateviewer"
+                        fontPath="font/irsans.ttf"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:background="@drawable/left_border"
+                        android:gravity="center"
+                        android:padding="9dp"
+                        android:text="96/12/2 - 96/9/2"
+                        android:textColor="@color/colorPrimary" />
+                </LinearLayout>
+
+                <Button
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_yellow"
+                    android:text="@string/moshahedeye_pishnahadaat"
+                    android:textSize="@dimen/main_text_size" />
+            </LinearLayout>
+
+            <TextView
+                fontPath="font/irsans.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="right"
+                android:text="@string/main_donbale_chizekhassi"
+                android:textColor="@color/text_header_color"
+                android:textSize="@dimen/main_text_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/main_atrafe_man"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_background_bottom_shadow"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/navigation"
+                    android:onClick="mainClicks"
+                    android:paddingRight="10dp"
+                    android:text="@string/atrafe_man"
+                    android:gravity="center|right"
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/main_text_size" />
+
+                <Button
+                    android:id="@+id/main_hotels"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_background_bottom_shadow"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/hotel"
+                    android:onClick="mainClicks"
+                    android:paddingRight="10dp"
+                    android:text="@string/hotelha"
+                    android:gravity="center|right"
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/main_text_size" />
+
+                <Button
+                    android:id="@+id/main_flights"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_background_bottom_shadow"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/flight"
+                    android:onClick="mainClicks"
+                    android:paddingRight="10dp"
+                    android:text="@string/parvazha"
+                    android:gravity="center|right"
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/main_text_size" />
+
+                <Button
+                    android:id="@+id/main_restaurants"
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_background_bottom_shadow"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/restaurants"
+                    android:onClick="mainClicks"
+                    android:paddingRight="10dp"
+                    android:text="@string/resturanha"
+                    android:gravity="center|right"
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/main_text_size" />
+
+                <Button
+                    fontPath="font/irsans.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_background_bottom_shadow"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/jazebe"
+                    android:onClick="mainClicks"
+                    android:paddingRight="10dp"
+                    android:text="@string/noghate_didani"
+                    android:gravity="center|right"
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/main_text_size" />
+            </LinearLayout>
+
+            <TextView
+                fontPath="font/irsans.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="right"
+                android:text="@string/dah_maghsade_bartar"
+                android:textColor="@color/text_header_color"
+                android:textSize="@dimen/main_text_size" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/main_maghsad_recycler1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                fontPath="font/irsans.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="right"
+                android:text="@string/dah_maghsade_bartar"
+                android:textSize="@dimen/main_text_size" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/main_maghsad_recycler2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:fitsSystemWindows="true"
+        android:theme="@style/NavigationDrawerStyle"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/menu_hotel_detail" />
+
+</android.support.v4.widget.DrawerLayout>

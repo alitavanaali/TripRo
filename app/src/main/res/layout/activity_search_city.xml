@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/app_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        layout="@layout/toolbar_search_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/city_current_button"
+        android:gravity="center|right"
+        android:text="مکان کنونی"
+        android:textSize="@dimen/medium_text_size"
+        android:padding="10dp"
+        android:drawableRight="@drawable/ic_my_location_black_24dp"
+        android:drawablePadding="10dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ListView
+        android:id="@+id/city_search_recyclerview"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent" />
+</LinearLayout>
