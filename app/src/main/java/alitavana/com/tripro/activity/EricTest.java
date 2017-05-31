@@ -7,5 +7,6 @@ package alitavana.com.tripro.activity;
 public class EricTest {
     public EricTest() {
         System.out.println("salam");
+        System.out.println("bye version 1");
     }
 }
