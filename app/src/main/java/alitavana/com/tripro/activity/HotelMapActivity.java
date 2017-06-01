@@ -34,12 +34,17 @@ public class HotelMapActivity extends AppCompatActivity implements OnMapReadyCal
     GoogleApiClient mGoogleApiClient;
     MapView mapView;
     GoogleMap googleMap;
-    LatLng hotelLatLng = new LatLng(32.6453016, 51.6504558);
+    LatLng LatLng ;
+    Location location = new Location("");
+    String Name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_hotel_map);
+        location.setLatitude(getIntent().getDoubleExtra("lat", 35.6892));
+        location.setLongitude(getIntent().getDoubleExtra("lng", 51.3890));
+        Name = getIntent().getStringExtra("Name");
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("font/irsans.ttf")
                 .setFontAttrId(R.attr.fontPath)
@@ -54,6 +59,7 @@ public class HotelMapActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void getComponents() {
+        LatLng = new LatLng(location.getLatitude(), location.getLongitude());
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(getApplicationContext())
                     .addConnectionCallbacks(this)
@@ -76,11 +82,11 @@ public class HotelMapActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public void onConnected(Bundle bundle) {
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(hotelLatLng);
-        markerOptions.title("نام هتل");
+        markerOptions.position(LatLng);
+        markerOptions.title(Name);
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.bed));
         googleMap.addMarker(markerOptions);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hotelLatLng, 17));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng, 17));
     }
 
     @Override

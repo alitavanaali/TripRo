@@ -51,7 +51,7 @@ import static alitavana.com.tripro.activity.MainActivity.SortingModel;
 public class Hotels extends AppCompatActivity {
     List<Hotel> hotelList = new ArrayList<>();
     HotelsAdapter hotelsAdapter;
-    Location location;
+    Location currentLocation;
     //RecyclerView hotels_recyclerview;
     ListView hotels_listView;
     //RecyclerView.LayoutManager mLayoutManager;
@@ -60,7 +60,7 @@ public class Hotels extends AppCompatActivity {
     Button btnLoadMore;
     ProgressDialog dialog;
     GPSTracker gps;
-
+    String cityName = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +86,7 @@ public class Hotels extends AppCompatActivity {
     }
 
     private void getComponents() {
+        cityName = getIntent().getStringExtra("cityName");
         // hotelsAdapter = new HotelsAdapter(getApplicationContext(), hotelList);
         // hotels_recyclerview = (RecyclerView) findViewById(R.id.hotels_recyclerview);
         this.hotels_listView = (ListView) findViewById(R.id.hotels_listView);
@@ -136,9 +137,9 @@ public class Hotels extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(Hotels.this, HotelDetailActivity.class);
-                /*intent.putExtra("Hotel", hotelList.get(position));
-                intent.putExtra("lat", location.getLatitude());
-                intent.putExtra("lng", location.getLongitude());*/
+                intent.putExtra("Hotel", hotelList.get(position));
+                intent.putExtra("lat", currentLocation.getLatitude());
+                intent.putExtra("lng", currentLocation.getLongitude());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -146,7 +147,7 @@ public class Hotels extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        hotelsAdapter = new HotelsAdapter(this, hotelList, location);
+        hotelsAdapter = new HotelsAdapter(this, hotelList, currentLocation);
         hotels_listView.setAdapter(hotelsAdapter);
         hotels_listView.addFooterView(btnLoadMore);
         dialog.cancel();
@@ -174,6 +175,11 @@ public class Hotels extends AppCompatActivity {
 
     private void prepareHotelList() {
         HotelJson hotelJson = new HotelJson();
+        if (cityName!= null && !cityName.equals("")){
+            hotelJson.setCity(cityName);
+            Log.d("HotelsActivity", cityName);
+        }
+
         ArrayList<Hotel> hotelsTmp = new ArrayList<>();
         try {
             this.hotelList = hotelJson.execute().get();
@@ -203,16 +209,17 @@ public class Hotels extends AppCompatActivity {
     }
     private void getCurrentLocation(){
         gps = new GPSTracker(this);
-        location = new Location("");
+        currentLocation = new Location("");
         // check if GPS enabled
         if (gps.canGetLocation()) {
-            location.setLatitude(gps.getLatitude());
-            location.setLongitude(gps.getLongitude());
+            currentLocation.setLatitude(gps.getLatitude());
+            currentLocation.setLongitude(gps.getLongitude());
         } else {
             gps.showSettingsAlert();
             // set tehran lat lang
-            location.setLatitude(35.6892);
-            location.setLongitude(51.3890);
+            currentLocation.setLatitude(35.6892);
+            currentLocation.setLongitude(51.3890);
+
         }
     }
 

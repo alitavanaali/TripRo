@@ -66,7 +66,7 @@ public class SearchCityActivity extends AppCompatActivity {
 
     private void getComponents() {
         city_search_recyclerview = (ListView) findViewById(R.id.city_search_recyclerview);
-        searchCityAdapter = new SearchCityAdapter(this, cityList);
+        /*searchCityAdapter = new SearchCityAdapter(this, cityList);*/
         search_toolbar_clear_btn = (TextView) findViewById(R.id.search_toolbar_clear_btn);
         searchbox = (EditText) findViewById(R.id.searchbox);
     }
@@ -131,7 +131,7 @@ public class SearchCityActivity extends AppCompatActivity {
     }
 
     private void setAdapters() {
-        city_search_recyclerview.setAdapter(searchCityAdapter);
+        /*city_search_recyclerview.setAdapter(searchCityAdapter);*/
     }
 
     @Override

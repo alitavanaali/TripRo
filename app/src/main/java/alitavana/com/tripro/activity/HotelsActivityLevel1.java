@@ -12,18 +12,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import alitavana.com.tripro.R;
 import alitavana.com.tripro.adapter.SearchCityAdapter;
+import alitavana.com.tripro.database.DatabaseHelper;
 import alitavana.com.tripro.gps.GPSTracker;
 import alitavana.com.tripro.model.City;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -36,28 +33,25 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class HotelsActivityLevel1 extends AppCompatActivity {
     ListView city_search_recyclerview;
     SearchCityAdapter searchCityAdapter;
-    List<City> cityList = new ArrayList<>();
-    List<City> filteredCityList = new ArrayList<>();
-    /*TextView search_toolbar_clear_btn;
-    EditText searchbox;*/
+    List<String> cityList = new ArrayList<>();
+    List<String> filteredCityList = new ArrayList<>();
+    TextView search_toolbar_clear_btn;
+    EditText searchbox;
     Boolean isMaghsad;
     Button city_current_button;
     GPSTracker gps;
     Location location;
-    PlaceAutocompleteFragment autocompleteFragment;
-    ImageView search_button, clear_button;
-    EditText searchbox;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_city);
         isMaghsad = getIntent().getBooleanExtra("isMaghsad", true);
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.search_city_hotel);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.search_city_hotel);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayShowHomeEnabled(false);
-        }*/
+        }
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("font/irsans.ttf")
                 .setFontAttrId(R.attr.fontPath)
@@ -70,31 +64,41 @@ public class HotelsActivityLevel1 extends AppCompatActivity {
     }
 
     private void getComponents() {
-        autocompleteFragment = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         city_search_recyclerview = (ListView) findViewById(R.id.city_search_recyclerview);
         city_current_button = (Button) findViewById(R.id.city_current_button);
         searchCityAdapter = new SearchCityAdapter(this, cityList);
-
-        search_button = (ImageView)((LinearLayout)autocompleteFragment.getView()).getChildAt(0);
-        search_button.setPadding(0,0,0,0);
-        clear_button = (ImageView)((LinearLayout)autocompleteFragment.getView()).getChildAt(2);
-        clear_button.setPadding(0,0,0,0);
-
-        searchbox = ((EditText)autocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_input));
-
-        searchbox.setTextSize(19.0f);
-        searchbox.setHint("نام مقصد");
+        search_toolbar_clear_btn = (TextView) findViewById(R.id.search_toolbar_clear_btn);
+        searchbox = (EditText) findViewById(R.id.searchbox);
+        searchbox.setHint("نام استان، شهر یا مقصد");
     }
 
     private void setOnClicks() {
+        search_toolbar_clear_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchbox.setText("");
+            }
+        });
+        searchbox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                searchCityAdapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
         city_search_recyclerview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                City city = (City) searchCityAdapter.getItem(position);
+                String city = (String) searchCityAdapter.getItem(position);
                 Intent intent = new Intent(HotelsActivityLevel1.this, Hotels.class);
-                intent.putExtra("geoCode", city.getGeoCode());
-                intent.putExtra("cityName", city.getName());
+                intent.putExtra("cityName", city);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -110,18 +114,8 @@ public class HotelsActivityLevel1 extends AppCompatActivity {
     }
 
     private void prepareData() {
-        City city1 = new City();
-        city1.setName("تهران");
-        city1.setCountry("ایران");
-        city1.setGeoCode("Tehran,IR");
-
-        City city2 = new City();
-        city2.setName("مشهد");
-        city2.setCountry("ایران");
-        city2.setGeoCode("Mashhad,IR");
-
-        cityList.add(city1);
-        cityList.add(city2);
+        DatabaseHelper databaseHelper = new DatabaseHelper(this, getFilesDir().getAbsolutePath());
+        cityList = databaseHelper.getCities();
     }
 
     private void setAdapters() {

@@ -1,10 +1,12 @@
 package alitavana.com.tripro.model;
 
+import java.io.Serializable;
+
 /**
  * Created by eric on 5/29/17.
  */
 
-public class TripImage {
+public class TripImage implements Serializable{
 
     private String hash;
     private String downloadLink;

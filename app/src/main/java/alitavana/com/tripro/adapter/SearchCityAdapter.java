@@ -29,13 +29,13 @@ import static alitavana.com.tripro.activity.MainActivity.MaghsadCity;
  */
 
 public class SearchCityAdapter extends BaseAdapter implements Filterable {
-    List<City> cityList;
-    List<City> filteredCityList;
+    List<String> cityList;
+    List<String> filteredCityList;
     Context context;
     LayoutInflater inflater;
     private ItemFilter mFilter = new ItemFilter();
 
-    public SearchCityAdapter(Context context, List<City> cityList) {
+    public SearchCityAdapter(Context context, List<String> cityList) {
         this.cityList = cityList;
         this.filteredCityList = cityList;
         this.context = context;
@@ -77,9 +77,8 @@ public class SearchCityAdapter extends BaseAdapter implements Filterable {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        City city = filteredCityList.get(position);
-        holder.adapter_city_name.setText(city.getName());
-        holder.adapter_city_country.setText(city.getCountry());
+        holder.adapter_city_name.setText(filteredCityList.get(position));
+        holder.adapter_city_country.setText("ایران");
 
         return convertView;
     }
@@ -97,18 +96,17 @@ public class SearchCityAdapter extends BaseAdapter implements Filterable {
 
             FilterResults results = new FilterResults();
 
-            final List<City> list = cityList;
+            final List<String> list = cityList;
 
             int count = list.size();
-            final ArrayList<City> nlist = new ArrayList<>(count);
+            final ArrayList<String> nlist = new ArrayList<>(count);
 
             String cityName ;
             String cityCountry ;
 
             for (int i = 0; i < count; i++) {
-                cityName = list.get(i).getName().toLowerCase();
-                cityCountry = list.get(i).getCountry().toLowerCase();
-                if (cityName.contains(filterString) || cityCountry.contains(filterString)) {
+                cityName = list.get(i).toLowerCase();
+                if (cityName.contains(filterString)) {
                     nlist.add(list.get(i));
                 }
             }
@@ -122,7 +120,7 @@ public class SearchCityAdapter extends BaseAdapter implements Filterable {
         @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredCityList = (ArrayList<City>) results.values;
+            filteredCityList = (ArrayList<String>) results.values;
             notifyDataSetChanged();
         }
 

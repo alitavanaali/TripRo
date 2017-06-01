@@ -48,8 +48,7 @@ import static alitavana.com.tripro.R.drawable.hotel;
  */
 
 public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
-
-
+    String cityName = "اصفهان";
     private String jsessionid="";
 
     private String things_to_doUid = "";
@@ -72,7 +71,7 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
         this.url="http://91.99.96.10:8102/PondMS/j_spring_security_check";
         try {
             getConnected(url);
-            getLayerUid("تهران");
+            getLayerUid(cityName);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -340,6 +339,11 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
 
         }
 
+    }
+
+    //setCity
+    public void setCity(String cityName){
+        this.cityName = cityName;
     }
 }
 

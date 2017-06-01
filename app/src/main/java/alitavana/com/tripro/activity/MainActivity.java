@@ -24,11 +24,13 @@ import android.widget.TextView;
 import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import alitavana.com.tripro.R;
 import alitavana.com.tripro.adapter.Top10DestinationAdapter;
+import alitavana.com.tripro.database.DatabaseHelper;
 import alitavana.com.tripro.model.City;
 import alitavana.com.tripro.model.Destination;
 import ir.mirrajabi.persiancalendar.PersianCalendarView;
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     PersianCalendar persianCalendar;
     DrawerLayout drawer;
     NavigationView navigationView;
-
+    DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +78,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+        databaseHelper = new DatabaseHelper(this, getFilesDir().getAbsolutePath());
+        try {
+            databaseHelper.prepareDatabase();
+        } catch (IOException e) {
+            Log.e("database", e.getMessage());
+        }
+        databaseHelper.close();
+
         prepareDestinationsData();
         getComponents();
     }

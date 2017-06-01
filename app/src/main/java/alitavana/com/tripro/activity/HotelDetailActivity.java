@@ -3,6 +3,7 @@ package alitavana.com.tripro.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ import java.util.List;
 import alitavana.com.tripro.R;
 import alitavana.com.tripro.adapter.CommentAdapter;
 import alitavana.com.tripro.model.Comment;
+import alitavana.com.tripro.model.Hotel;
 import alitavana.com.tripro.typeface.CustomTypefaceSpan;
 import at.blogc.android.views.ExpandableTextView;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -39,15 +42,17 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class HotelDetailActivity extends AppCompatActivity {
     boolean FLAG_COLLAPSED = true;
     ImageView hotel_detail_back_btn;
-    /*TabLayout tabLayout;*/
+    Location currenLocation = new Location("");
     FloatingActionButton fab;
     ExpandableTextView expandableTextView;
     List<Comment> commentList = new ArrayList<>();
     RecyclerView comments_recyclerview;
     CommentAdapter commentAdapter;
     NestedScrollView adapter_hotel_NestedScrollView;
-    TextView content_hotel_ettelaatehotel;
+    TextView content_hotel_ettelaatehotel, content_hotel_name, content_hotel_distance, content_hotel_address;
     LinearLayout hotel_detail_map_linear;
+    Hotel hotel;
+    RatingBar adapter_hotel_ratingbar, adapter_hotel_ratingbar2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +60,36 @@ public class HotelDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hotel_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getIntents();
         getComponents();
+        setComponents();
         setClicks();
         setFonts();
         prepareComments();
         setCommentsAdapter();
     }
 
+    private void setComponents(){
+        // name
+        content_hotel_name.setText(hotel.getName());
+
+        // description
+        expandableTextView.setText(hotel.getDescription());
+
+        // address
+        content_hotel_address.setText(hotel.getAddress());
+
+        //calculate distance
+        Location hotelLocation = new Location("");
+        hotelLocation.setLatitude(hotel.getLat());
+        hotelLocation.setLongitude(hotel.getLng());
+        content_hotel_distance.setText((int) (calculateDistance(currenLocation, hotelLocation) / 1000)
+                + " km");
+    }
+
     private void getComponents() {
         TextView toolbar_header = (TextView) findViewById(R.id.toolbar_title);
-        toolbar_header.setText("هتل هشت بهشت اصفهان");
+        toolbar_header.setText(hotel.getName());
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("font/irsans.ttf")
@@ -74,13 +98,7 @@ public class HotelDetailActivity extends AppCompatActivity {
         );
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HotelDetailActivity.this, HotelImageGalleryActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         hotel_detail_back_btn = (ImageView) findViewById(R.id.hotel_detail_back_btn);
 
@@ -92,48 +110,31 @@ public class HotelDetailActivity extends AppCompatActivity {
                     // Collapsed
                     FLAG_COLLAPSED = true;
                     hotel_detail_back_btn.setVisibility(View.VISIBLE);
-
-                    /*tabLayout.setAlpha(0.0f);
-                    tabLayout.setVisibility(View.VISIBLE);
-                    tabLayout.animate()
-                            .setDuration(1000)
-                            .translationY(0)
-                            .alpha(1.0f);
-
-                    fab.setVisibility(View.INVISIBLE);*/
                 } else if (verticalOffset == 0) {
                     FLAG_COLLAPSED = false;
                     hotel_detail_back_btn.setVisibility(View.INVISIBLE);
-
-                    /*fab.setVisibility(View.VISIBLE);*/
                 } else {
-                    // Somewhere in between
-                    /*tabLayout.animate()
-                            .setDuration(1000)
-                            .translationY(0)
-                            .alpha(0f);
-                    tabLayout.setVisibility(View.GONE);*/
                 }
             }
         });
 
-        /*tabLayout = (TabLayout) findViewById(R.id.tabs);*/
-
         expandableTextView = (ExpandableTextView) findViewById(R.id.expandableTextView);
-        expandableTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                expandableTextView.toggle();
-            }
-        });
 
         comments_recyclerview = (RecyclerView) findViewById(R.id.comments_recyclerview);
-
         adapter_hotel_NestedScrollView = (NestedScrollView) findViewById(R.id.adapter_hotel_NestedScrollView);
 
         content_hotel_ettelaatehotel = (TextView) findViewById(R.id.content_hotel_ettelaatehotel);
+        content_hotel_name = (TextView) findViewById(R.id.content_hotel_name);
+        content_hotel_distance = (TextView) findViewById(R.id.content_hotel_distance);
+        content_hotel_address = (TextView) findViewById(R.id.content_hotel_address);
 
         hotel_detail_map_linear = (LinearLayout) findViewById(R.id.hotel_detail_map_linear);
+    }
+
+    private void getIntents(){
+        hotel = (Hotel) getIntent().getSerializableExtra("Hotel");
+        currenLocation.setLatitude(getIntent().getDoubleExtra("lat", 35.6892));
+        currenLocation.setLongitude(getIntent().getDoubleExtra("lng", 51.3890));
     }
 
     private void setClicks(){
@@ -141,7 +142,24 @@ public class HotelDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HotelDetailActivity.this, HotelMapActivity.class);
+                intent.putExtra("lat", hotel.getLat());
+                intent.putExtra("lng", hotel.getLng());
+                intent.putExtra("name", hotel.getName());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+            }
+        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HotelDetailActivity.this, HotelImageGalleryActivity.class);
+                startActivity(intent);
+            }
+        });
+        expandableTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expandableTextView.toggle();
             }
         });
     }
@@ -172,36 +190,10 @@ public class HotelDetailActivity extends AppCompatActivity {
         SpannableString spannableString2 = new SpannableString("اطلاعات هتل ها");
         spannableString2.setSpan(new CustomTypefaceSpan("", irsans), 0, spannableString2.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
-        /*tabLayout.addTab(tabLayout.newTab().setText(spannableString));
-        tabLayout.addTab(tabLayout.newTab().setText(spannableString2));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 0) {
-                    // didgah
-                    adapter_hotel_NestedScrollView.smoothScrollTo(0, 1160);
-                } else {
-                    //ettelaate hotel
-                    adapter_hotel_NestedScrollView.smoothScrollTo(0, 200);
-                }
-            }
+    }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 0) {
-                    // didgah
-                    adapter_hotel_NestedScrollView.smoothScrollTo(0, 1160);
-                } else {
-                    //ettelaate hotel
-                    adapter_hotel_NestedScrollView.smoothScrollTo(0, 200);
-                }
-            }
-        });*/
+    private float calculateDistance(Location location1, Location location2) {
+        return location2.distanceTo(location1);
     }
 
     @Override

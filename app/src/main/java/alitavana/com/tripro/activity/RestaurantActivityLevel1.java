@@ -75,7 +75,7 @@ public class RestaurantActivityLevel1 extends AppCompatActivity {
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         city_search_recyclerview = (ListView) findViewById(R.id.city_search_recyclerview);
         city_current_button = (Button) findViewById(R.id.city_current_button);
-        searchCityAdapter = new SearchCityAdapter(this, cityList);
+        /*searchCityAdapter = new SearchCityAdapter(this, cityList);*/
 
         search_button = (ImageView)((LinearLayout)autocompleteFragment.getView()).getChildAt(0);
         search_button.setPadding(0,0,0,0);
@@ -145,7 +145,7 @@ public class RestaurantActivityLevel1 extends AppCompatActivity {
     }
 
     private void setAdapters() {
-        city_search_recyclerview.setAdapter(searchCityAdapter);
+        /*city_search_recyclerview.setAdapter(searchCityAdapter);*/
     }
 
     @Override
@@ -156,6 +156,6 @@ public class RestaurantActivityLevel1 extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        searchCityAdapter.notifyDataSetChanged();
+        /*searchCityAdapter.notifyDataSetChanged();*/
     }
 }
