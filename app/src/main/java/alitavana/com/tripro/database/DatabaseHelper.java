@@ -196,18 +196,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return list;
-    }
-
-
-    public String getAnswer(String konkoorNum, String questionNum) {
-        SQLiteDatabase db = SQLiteDatabase.openDatabase(pathToSaveDBFile, null, SQLiteDatabase.OPEN_READONLY);
-        String selectQuery = "SELECT right_answer FROM Questions WHERE konkoor_num = '" + konkoorNum + "' AND question_num = '" + questionNum + "' ";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        cursor.moveToFirst();
-        String right_answer = cursor.getString(0);
-        cursor.close();
-        db.close();
-        return right_answer;
     }*/
 
 
