@@ -1,37 +1,33 @@
 package alitavana.com.tripro.model;
 
+import java.util.List;
+
 /**
  * Created by eric on 5/29/17.
  */
 
 public class LowestPrice {
 
-    private String price;
-    private String host;
-    private String link;
+    private Price[] price;
+    private String name;
 
-    public String getPrice() {
+    public Price[] getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Price[] price) {
         this.price = price;
     }
 
-    public String getHost() {
-        return host;
+
+    public String getName() {
+        return name;
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLink() {
-        return link;
-    }
 
-    public void setLink(String link) {
-        this.link = link;
-    }
 
 }

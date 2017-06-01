@@ -1,14 +1,18 @@
 package alitavana.com.tripro.model;
 
+import android.media.Image;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ali Tavana on 19/04/2017.
  */
 
-public class Hotel implements Serializable {
-    private ArrayList<LowestPrice> prices;
+public class Hotel implements Serializable{
+
+    private LowestPrice prices;
     private String name;
     private int score;
     private ArrayList<TripImage> photos;
@@ -18,15 +22,7 @@ public class Hotel implements Serializable {
     private String features;
     private double lat;
     private double lng;
-    private float aliLat;
 
-    public float getAliLat() {
-        return aliLat;
-    }
-
-    public void setAliLat(float aliLat) {
-        this.aliLat = aliLat;
-    }
 
     public double getLat() {
         return lat;
@@ -37,6 +33,7 @@ public class Hotel implements Serializable {
     }
 
 
+
     public double getLng() {
         return lng;
     }
@@ -45,7 +42,6 @@ public class Hotel implements Serializable {
     public void setLng(double lng) {
         this.lng = lng;
     }
-
 
 
 
@@ -123,11 +119,28 @@ public class Hotel implements Serializable {
         this.photos = photos;
     }
 
-    public ArrayList<LowestPrice> getPrices() {
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LowestPrice getPrices() {
         return prices;
     }
 
-    public void setPrices(ArrayList<LowestPrice> prices) {
+    public void setPrices(LowestPrice prices) {
         this.prices = prices;
     }
 }

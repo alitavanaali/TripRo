@@ -38,6 +38,7 @@ public class RestaurantForSquare extends AsyncTask<View, Void, ArrayList<Foursqu
     ArrayList<FoursquareModel> venuesList = new ArrayList<>();
     String geoCode;
     Location location = new Location("");
+    Location currentLocation = new Location("");
     GPSTracker gps;
     Context context;
     @Override
@@ -45,19 +46,25 @@ public class RestaurantForSquare extends AsyncTask<View, Void, ArrayList<Foursqu
         // make Call to the url
         String Link= "";
         String prices= getPrice();
-        if (geoCode != null) {
-            Link = "https://api.foursquare.com/v2/venues/explore?"
+        if (location.getLongitude() != 0 && location.getLatitude() != 0) {
+            /*Link = "https://api.foursquare.com/v2/venues/explore?"
                     + "near=" + geoCode +
                     "&section=food" +
                     "&price=" + prices +
                     "&venuePhotos=1" +
                     "&offset=" + offset +
+                    "&oauth_token=AZ1XZL5WKYB0CXYHABBKM1TAN0MJSYZF4FX4G34JSGVQPX5S&v=20170522";*/
+            Link = "https://api.foursquare.com/v2/venues/explore?"
+                    + "ll=" + location.getLatitude() + "," + location.getLongitude() +
+                    "&price=" + prices +
+                    "&section=food" +
+                    "&venuePhotos=1" +
+                    "&offset=" + offset +
                     "&oauth_token=AZ1XZL5WKYB0CXYHABBKM1TAN0MJSYZF4FX4G34JSGVQPX5S&v=20170522";
         }
         else {
-
             Link = "https://api.foursquare.com/v2/venues/explore?"
-                    + "ll=" + location.getLatitude() + "," + location.getLongitude() +
+                    + "ll=" + currentLocation.getLatitude() + "," + currentLocation.getLongitude() +
                     "&price=" + prices +
                     "&section=food" +
                     "&venuePhotos=1" +
@@ -152,16 +159,15 @@ public class RestaurantForSquare extends AsyncTask<View, Void, ArrayList<Foursqu
 
     private void getCurrentLocation(){
         gps = new GPSTracker(context);
-        location = new Location("");
         // check if GPS enabled
         if (gps.canGetLocation()) {
-            location.setLatitude(gps.getLatitude());
-            location.setLongitude(gps.getLongitude());
+            currentLocation.setLatitude(gps.getLatitude());
+            currentLocation.setLongitude(gps.getLongitude());
         } else {
             gps.showSettingsAlert();
             // set tehran lat lang
-            location.setLatitude(35.6892);
-            location.setLongitude(51.3890);
+            currentLocation.setLatitude(35.6892);
+            currentLocation.setLongitude(51.3890);
         }
     }
 

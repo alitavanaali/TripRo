@@ -9,6 +9,15 @@ public class TripImage {
     private String hash;
     private String downloadLink;
     private String name;
+    private byte[] photoValue;
+
+    public byte[] getPhotoValue() {
+        return photoValue;
+    }
+
+    public void setPhotoValue(byte[] photoValue) {
+        this.photoValue = photoValue;
+    }
 
     public String getHash() {
         return hash;

@@ -153,6 +153,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 break;
             case R.id.main_atrafe_man:
+                intent = new Intent(MainActivity.this, testActivity.class);
+                startActivity(intent);
                 break;
             case R.id.main_menu_button:
                 drawer.openDrawer(GravityCompat.END);

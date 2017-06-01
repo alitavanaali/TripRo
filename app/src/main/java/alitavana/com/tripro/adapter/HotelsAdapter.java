@@ -2,6 +2,8 @@ package alitavana.com.tripro.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -45,7 +47,7 @@ public class HotelsAdapter extends BaseAdapter {
         currentLocation = location;
     }
 
-    private void calculatedate(){
+    private void calculatedate() {
 
     }
 
@@ -83,21 +85,14 @@ public class HotelsAdapter extends BaseAdapter {
         } else {
             holder = (MyViewHolder) convertView.getTag();
         }
-        final Hotel hotel = hotelList.get(position);
+        Hotel hotel = hotelList.get(position);
 
+        // name
         holder.adapter_hotel_name.setText(hotel.getHotelName());
-        /*if (hotel.getPhotos() != null){
-            Log.d("myLog", "B");
-            if (hotel.getPhotos().size() > 0){
-                Picasso.with(context).load(String.valueOf( "91.99.96.10:8102/PondMS/" + hotel.getPhotos().get(0).getDownloadLink()))
-                        .into(holder.adapter_hotel_imageview);
-            }
-        }*/
-        Log.i("HotelAdapter", "Name: " + hotel.getHotelName() + " getAddress: " + hotel.getAddress());
 
-        //price
-        if (hotel.getPrices() != null && hotel.getPrices().size() >0)
-            holder.adapter_hotel_price.setText(hotel.getPrices().get(0).getPrice());
+        //Log.i("HotelAdapter", "Name: " + hotel.getHotelName() + " getAddress: " + hotel.getAddress());
+
+
         //calculate distance
         Location location2 = new Location("");
         location2.setLatitude(hotel.getLat());
@@ -108,20 +103,37 @@ public class HotelsAdapter extends BaseAdapter {
         else
             holder.adapter_restaurant_distance.setText(String.format("%.1f", distance) + "km");
 
+        //price
+        /*holder.adapter_hotel_price.setText(hotel.getPrices().getPrice()[0] + "");*/
+
+
         //rate
-        /*holder.adapter_hotel_ratingBar.setRating(hotel.getHotelRate());*/
+        Log.d("hoteladapter", "rate: " + hotel.getHotelRate() + " lat and lng: " + hotel.getLat() + "," + hotel.getLng() + " price: ");
+        holder.adapter_hotel_ratingBar.setRating((hotel.getHotelRate() * 2));
 
         // set image
         if (hotel.getPhotos() != null) {
             if (hotel.getPhotos().size() > 0) {
-                Picasso.with(context)
-                        .load(String.valueOf("91.99.96.10:8102/PondMS/" + hotel.getPhotos().get(0).getDownloadLink()))
-                        .error(R.mipmap.ic_launcher)
-                        .placeholder(R.drawable.picasso_placeholder)
-                        .into(holder.adapter_hotel_imageview);
-                Log.d("hotelsadapter",String.valueOf("91.99.96.10:8102/PondMS/" + hotel.getPhotos().get(0).getDownloadLink()) + "" );
+
+                try {
+                    Log.d("this is test ------>", "91.99.96.10:8102/PondMS/" + hotel.getPhotos().get(0).getDownloadLink());
+                    System.out.println("91.99.96.10:8102/PondMS/" + hotel.getPhotos().get(0).getDownloadLink());
+
+
+                    byte[] data = hotel.getPhotos().get(0).getPhotoValue();
+                    Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    holder.adapter_hotel_imageview.setImageBitmap(bmp);
+                    Log.d("hoteladapter", "bmp: " + bmp);
+
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
             }
+            else Log.d("image", "null bood!");
         }
+
 
 
         return convertView;

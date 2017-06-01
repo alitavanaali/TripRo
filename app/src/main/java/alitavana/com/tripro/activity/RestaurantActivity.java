@@ -18,13 +18,34 @@ import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dd.CircularProgressButton;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -46,7 +67,7 @@ import static alitavana.com.tripro.activity.MainActivity.SortingModel;
  * Created by Ali Tavana on 21/04/2017.
  */
 
-public class RestaurantActivity extends AppCompatActivity {
+public class RestaurantActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     ArrayList<FoursquareModel> restaurantList = new ArrayList<>();
     RestaurantAdapter restaurantAdapter;
     ListView restaurant_listview;
@@ -55,9 +76,10 @@ public class RestaurantActivity extends AppCompatActivity {
     GPSTracker gps;
     Location location;
     Button btnLoadMore;
-    String geoCode, cityName;
+    String cityName, lat, lng;
     int offset = 1;
     ProgressDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +90,7 @@ public class RestaurantActivity extends AppCompatActivity {
                 .build()
         );
         getIntents();
+
         dialog = ProgressDialog.show(this, "",
                 "Loading. Please wait...", true);
         getCurrentLocation();
@@ -84,15 +107,16 @@ public class RestaurantActivity extends AppCompatActivity {
 
     }
 
+
     private void getComponents() {
 
         restaurant_listview = (ListView) findViewById(R.id.restaurant_listview);
 
-        restaurant_backbtn  = (TextView) findViewById(R.id.restaurant_backbtn);
-        hotels_sorting_model  = (TextView) findViewById(R.id.hotels_sorting_model);
-        hotels_sorting_btn  = (TextView) findViewById(R.id.hotels_sorting_btn);
+        restaurant_backbtn = (TextView) findViewById(R.id.restaurant_backbtn);
+        hotels_sorting_model = (TextView) findViewById(R.id.hotels_sorting_model);
+        hotels_sorting_btn = (TextView) findViewById(R.id.hotels_sorting_btn);
 
-        searchbox  = (EditText) findViewById(R.id.searchbox);
+        searchbox = (EditText) findViewById(R.id.searchbox);
         if (cityName != null)
             searchbox.setHint(cityName);
 
@@ -103,7 +127,7 @@ public class RestaurantActivity extends AppCompatActivity {
         /*btnLoadMore.setBackgroundResource(R.drawable.btn_load_background_selector);*/
     }
 
-    private void setSortingType(){
+    private void setSortingType() {
         switch (SortingModel) {
             case 1:
                 hotels_sorting_model.setText("مرتب سازی: رتبه بندی");
@@ -130,7 +154,7 @@ public class RestaurantActivity extends AppCompatActivity {
         }
     }
 
-    private void setClicks(){
+    private void setClicks() {
         restaurant_backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,13 +200,13 @@ public class RestaurantActivity extends AppCompatActivity {
         RestaurantForSquare restaurantForSquare = new RestaurantForSquare();
         restaurantForSquare.setOffset(offset);
         restaurantForSquare.setContext(this);
-        if (geoCode != null){
-            restaurantForSquare.setGeoCode(geoCode);
+        if (lat != null && lng != null && !lat.equals("") && !lng.equals("")) {
+            restaurantForSquare.setLocation(lat,lng);
         }
         try {
             ArrayList<FoursquareModel> newFoursquareModels = new ArrayList<>();
             newFoursquareModels = restaurantForSquare.execute().get();
-            for (int number = 0; number< newFoursquareModels.size(); ++number){
+            for (int number = 0; number < newFoursquareModels.size(); ++number) {
                 restaurantList.add(newFoursquareModels.get(number));
             }
         } catch (InterruptedException e) {
@@ -193,9 +217,10 @@ public class RestaurantActivity extends AppCompatActivity {
 
     }
 
-    private void getIntents(){
-        geoCode = getIntent().getStringExtra("geoCode");
+    private void getIntents() {
         cityName = getIntent().getStringExtra("cityName");
+        lat = getIntent().getStringExtra("lat");
+        lng = getIntent().getStringExtra("lng");
     }
 
     @Override
@@ -210,7 +235,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
     }
 
-    private void getCurrentLocation(){
+    private void getCurrentLocation() {
         gps = new GPSTracker(this);
         location = new Location("");
         // check if GPS enabled
@@ -225,18 +250,24 @@ public class RestaurantActivity extends AppCompatActivity {
         }
     }
 
-    private SpannableString setFonts(String text){
+    private SpannableString setFonts(String text) {
         Typeface irsans = Typeface.createFromAsset(getApplicationContext().getAssets(), "font/irsans.ttf");
         SpannableString spannableString = new SpannableString(text);
         spannableString.setSpan(new CustomTypefaceSpan("", irsans), 0, spannableString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         return spannableString;
     }
 
+    public void onItemClick(AdapterView adapterView, View view, int position, long id) {
+        String str = (String) adapterView.getItemAtPosition(position);
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
+            if (resultCode == Activity.RESULT_OK) {
                 /*String result=data.getStringExtra("result");*/
                 dialog = ProgressDialog.show(this, "",
                         "Loading. Please wait...", true);
@@ -257,6 +288,7 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         }
     }
+
 
 }
 

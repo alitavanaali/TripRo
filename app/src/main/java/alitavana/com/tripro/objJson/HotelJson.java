@@ -37,6 +37,7 @@ import java.util.Set;
 import alitavana.com.tripro.model.FoursquareModel;
 import alitavana.com.tripro.model.Hotel;
 import alitavana.com.tripro.model.LowestPrice;
+import alitavana.com.tripro.model.Price;
 import alitavana.com.tripro.model.TripImage;
 
 import static alitavana.com.tripro.R.drawable.hotel;
@@ -48,11 +49,14 @@ import static alitavana.com.tripro.R.drawable.hotel;
 
 public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
 
+
     private String jsessionid="";
 
     private String things_to_doUid = "";
 
     String url="";
+
+    private LowestPrice[] lowestPricesList;
 
     private ArrayList<Hotel> hotels=new ArrayList<>();
 
@@ -97,10 +101,8 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
         singleJson.addProperty("type", "like");
         singleJson.addProperty("field", "name");
         singleJson.addProperty("value", "شهر" + " " + cityName);
-
         myArray.add(singleJson);
         myJson.add("restrictions", myArray);
-
 
         Connection.Response response = Jsoup.connect(
                 "http://91.99.96.10:8102/PondMS/api/org/da0f6335-120d-4557-9b19-eaf6ce5a72c8/layer/items?extent=full")
@@ -121,11 +123,8 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
             getHotelsListPrice();
 
         } catch (Exception e) {
-
             e.printStackTrace();
-
         }
-
     }
 
 
@@ -133,17 +132,9 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
     //hotels low details
     private void getHotelsListPrice() throws Exception{
 
-        Connection.Response myResponse = Jsoup.connect("http://91.99.96.10:8102/PondMS/api/search/hotels/items?city=تهران&check_in=1396/03/013&nights=2&adults=2&children=2").userAgent("Mozilla").followRedirects(true).header("Cookie" , jsessionid).header("Content-Type" , "application/json").ignoreContentType(true).ignoreHttpErrors(true).method(Connection.Method.GET).execute();
+        Connection.Response myResponse = Jsoup.connect("http://91.99.96.10:8102/JustRO/rest/search/hotels/items?city=تهران&check_in=1396/03/13&nights=2&adults=2&children=2").userAgent("Mozilla").followRedirects(true).header("Cookie" , jsessionid).header("Content-Type" , "application/json").ignoreContentType(true).ignoreHttpErrors(true).method(Connection.Method.GET).execute();
 
         try {
-
-            JSONArray jsonArray = new JSONArray(myResponse.body());
-
-            for(int i=0;i<jsonArray.length();i++)
-            {
-                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                hotelNames.add(jsonObject1.getString("name"));
-            }
 
             parseHotelsLowDetailsFromServer(myResponse.body());
 
@@ -184,7 +175,8 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
         restrictionObject.add("restrictions", restrictionArray);
         restrictionObject.add("orders", orderList );
 
-        String url = "http://91.99.96.10:8102/PondMS/api/org/da0f6335-120d-4557-9b19-eaf6ce5a72c8/gis-vector-object/items?extent=full";
+
+        String url = "http://91.99.96.10:8102/PondMS/api/org/da0f6335-120d-4557-9b19-eaf6ce5a72c8/gis-vector-object/items?extent=full&len=100&start=0";
         Connection.Response myResponseHotelsList = Jsoup.connect(url)
                 .userAgent("Mozilla")
                 .followRedirects(true)
@@ -210,53 +202,88 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
             JSONObject jsonObject = new JSONObject(response);
             JSONArray jsonArray = jsonObject.getJSONArray("items");
 
+            System.out.println(jsonObject.toString());
+            Log.i("mohandes", jsonArray.length() + "");
+
             for (int i = 0; i < jsonArray.length(); i++) {
 
+                Hotel hotelTemp = new Hotel();
                 ArrayList<TripImage> imagesTmp = new ArrayList<>();
 
-                for (int k = 0; k < hotels.size(); k++) {
 
-                    if(hotels.get(k).getHotelName().equals(jsonArray.getJSONObject(i).get("name"))) {
 
                         JSONObject pointTemp = jsonArray.getJSONObject(i).getJSONObject("point");
 
-                        hotels.get(k).setLat((Double) pointTemp.getJSONArray("coordinates").get(0));
-                        Log.i("hamedddd" , hotels.get(k).getHotelName() + " ");
+                        hotelTemp.setLat((Double) pointTemp.getJSONArray("coordinates").get(1));
+                        hotelTemp.setHotelName(jsonArray.getJSONObject(i).getString("name"));
+                        Log.i("hamedddd" , hotelTemp.getHotelName() + " ");
 
-                        hotels.get(k).setLng((Double) pointTemp.getJSONArray("coordinates").get(1));
+                        hotelTemp.setLng((Double) pointTemp.getJSONArray("coordinates").get(0));
+                    for (int l = 0; l < lowestPricesList.length; l++){
+
+                        if (lowestPricesList[l].getName() == jsonArray.getJSONObject(i).getString("name")){
+
+                            hotelTemp.setPrices(lowestPricesList[l]);
+                        }
+                    }
 
                         if (jsonArray.getJSONObject(i).has("formInstance")) {
 
                             JSONObject temp = jsonArray.getJSONObject(i).getJSONObject("formInstance");
 
-
-                            hotels.get(k).setAddress(temp.getString("Address"));
-                            hotels.get(k).setDescription(temp.getString("Description"));
-                            hotels.get(k).setFeatures(temp.getString("Features"));
-                            hotels.get(k).setHotelRate((Integer) temp.get("Score"));
+                            hotelTemp.setAddress(temp.getString("Address"));
+                            hotelTemp.setDescription(temp.getString("Description"));
+                            hotelTemp.setFeatures(temp.getString("Features"));
+                            hotelTemp.setHotelRate((Integer) temp.get("Score"));
                             JSONArray jsonImagesArray = temp.getJSONArray("Images");
 
                             for (int j = 0; j < jsonImagesArray.length(); j++) {
 
                                 JSONObject jsonObjectImages = jsonImagesArray.getJSONObject(j);
 
-                                if ( temp.getJSONArray("Images").getJSONObject(j).has("downloadLink"))
-                                {
+                                if (temp.getJSONArray("Images").getJSONObject(j).has("downloadLink")) {
                                     TripImage tripImage = new TripImage();
                                     tripImage.setDownloadLink(jsonObjectImages.getString("downloadLink"));
+                                    if (j == 0) {
+                                        tripImage.setPhotoValue(getImage("http://91.99.96.10:8102/PondMS/" + tripImage.getDownloadLink()));
+                                    }
                                     imagesTmp.add(tripImage);
                                 }
                             }
-                            hotels.get(k).setPhotos(imagesTmp);
+
+
+                            hotelTemp.setPhotos(imagesTmp);
                         }
-                    }
-                }
+
+
+
+                hotels.add(hotelTemp);
+
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+
+    private byte[] getImage(String url){
+
+        try {
+            Connection.Response resultImageResponse = Jsoup.connect(url).header("Cookie", jsessionid)
+                    .ignoreContentType(true).execute();
+
+            return resultImageResponse.bodyAsBytes();
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+
+        }
+
+        return null;
+    }
+
 
     //parse hotel lowest price in hotels list
     private void parseHotelsLowDetailsFromServer(String response) {
@@ -265,40 +292,37 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
 
             JSONArray jsonArray = new JSONArray(response);
 
+            Log.i("mohandes man",  jsonArray.length() + "");
+            lowestPricesList = new LowestPrice[jsonArray.length()];
             for (int i = 0; i < jsonArray.length(); i++) {
 
-                Hotel hotel = new Hotel();
-                ArrayList<LowestPrice> lowestPriceTmp = new ArrayList<>();
                 JSONObject jsonobject =  jsonArray.getJSONObject(i);
-                hotel.setHotelName((String) jsonobject.get("name"));
+                hotelNames.add(jsonobject.getString("name"));
                 JSONArray jsonArray1 = jsonobject.getJSONArray("lowestPrices");
-
+                LowestPrice temp = new LowestPrice();
+                temp.setName(jsonobject.getString("name"));
+                Price[] getMoney = new Price[jsonArray1.length()];
                 for (int j = 0; j < jsonArray1.length(); j++) {
-                    LowestPrice lowestPrice = new LowestPrice();
+                    Price lowestPrice = new Price();
                     JSONObject jsonObject1 =  jsonArray1.getJSONObject(j);
                     lowestPrice.setPrice(jsonObject1.getString("price"));
                     lowestPrice.setHost(jsonObject1.getString("host"));
                     lowestPrice.setLink(jsonObject1.getString("link"));
-                    lowestPriceTmp.add(lowestPrice);
+                    getMoney[j] = lowestPrice;
                 }
-                hotel.setPrices(lowestPriceTmp);
-                hotels.add(hotel);
-            }
 
+                lowestPricesList[i] = temp;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            for (int hamed=0; hamed < hotelNames.size(); hamed++){
-                Log.d("aliiii", hotelNames.get(hamed));
-            }
             getHotelsList(hotelNames);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        System.out.println(this.hotels.size());
     }
 
 
