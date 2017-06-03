@@ -1,13 +1,16 @@
 package alitavana.com.tripro.model;
 
+import java.io.Serializable;
+
 /**
  * Created by hamedpourjafar on 6/1/17.
  */
 
-public class Price {
+public class Price implements Serializable{
 
     private String host;
     private String price;
+    private String link;
 
     public String getHost() {
         return host;
@@ -33,6 +36,5 @@ public class Price {
         this.link = link;
     }
 
-    private String link;
 
 }

@@ -57,7 +57,7 @@ public class RestaurantActivityLevel1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_city);
+        setContentView(R.layout.activity_restaurant_level1);
         isMaghsad = getIntent().getBooleanExtra("isMaghsad", true);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("font/irsans.ttf")
@@ -85,7 +85,7 @@ public class RestaurantActivityLevel1 extends AppCompatActivity {
         searchbox = ((EditText)autocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_input));
 
         searchbox.setTextSize(19.0f);
-        searchbox.setHint("نام مقصد");
+        searchbox.setHint("نام استان یا شهر مقصد");
     }
 
     private void setOnClicks() {

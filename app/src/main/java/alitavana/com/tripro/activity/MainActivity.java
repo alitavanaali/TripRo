@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static int Room = 1;
     public static int Adault = 1;
     public static int Children = 0;
-    public static int SortingModel = 2;
+    public static int SortingModel = 1;
     public static Boolean IsPrice1 = false;
     public static Boolean IsPrice2 = false;
     public static Boolean IsPrice3 = false;
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static PersianDate DateEnter;
     public static PersianDate DateExit;
     public static Boolean IsTwoWay = false;
+    public static int DayBetween = 1;
     PersianCalendar persianCalendar;
     DrawerLayout drawer;
     NavigationView navigationView;
@@ -214,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        drawer.closeDrawer(GravityCompat.END);
         if (id == R.id.action_profile) {
             Intent intent=new Intent(MainActivity.this, ProfileActivity.class);
             startActivity(intent);
@@ -225,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.action_info) {
 
         }
-        drawer.closeDrawer(GravityCompat.END);
+
         return true;
     }
 

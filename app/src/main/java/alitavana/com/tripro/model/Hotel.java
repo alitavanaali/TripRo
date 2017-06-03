@@ -20,9 +20,6 @@ public class Hotel implements Serializable{
     private String address;
     private String description;
     private String features;
-    private double lat;
-    private double lng;
-
 
     public double getLat() {
         return lat;
@@ -32,7 +29,7 @@ public class Hotel implements Serializable{
         this.lat = lat;
     }
 
-
+    private double lat;
 
     public double getLng() {
         return lng;
@@ -43,6 +40,7 @@ public class Hotel implements Serializable{
         this.lng = lng;
     }
 
+    private double lng;
 
 
     public Hotel(String hotelName, int hotelRate) {

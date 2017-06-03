@@ -48,14 +48,15 @@ import static alitavana.com.tripro.R.drawable.hotel;
  */
 
 public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
-    String cityName = "اصفهان";
+
+    String cityName;
     private String jsessionid="";
 
     private String things_to_doUid = "";
 
     String url="";
 
-    private LowestPrice[] lowestPricesList;
+    private ArrayList<LowestPrice> lowestPricesList = new ArrayList<>();
 
     private ArrayList<Hotel> hotels=new ArrayList<>();
 
@@ -64,6 +65,10 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
     String lowDetailTemp;
     String fullDetailTmp;
     private  String hotelUid = "";
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
 
     @Override
     protected ArrayList<Hotel> doInBackground(View... link) {
@@ -131,7 +136,8 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
     //hotels low details
     private void getHotelsListPrice() throws Exception{
 
-        Connection.Response myResponse = Jsoup.connect("http://91.99.96.10:8102/JustRO/rest/search/hotels/items?city=تهران&check_in=1396/03/13&nights=2&adults=2&children=2").userAgent("Mozilla").followRedirects(true).header("Cookie" , jsessionid).header("Content-Type" , "application/json").ignoreContentType(true).ignoreHttpErrors(true).method(Connection.Method.GET).execute();
+        Connection.Response myResponse = Jsoup.connect("http://91.99.96.10:8102/JustRO/rest/search/hotels/items?city="
+                + this.cityName + "&check_in=1396/03/13&nights=2&adults=2&children=2").userAgent("Mozilla").followRedirects(true).header("Cookie" , jsessionid).header("Content-Type" , "application/json").ignoreContentType(true).ignoreHttpErrors(true).method(Connection.Method.GET).execute();
 
         try {
 
@@ -215,14 +221,15 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
 
                         hotelTemp.setLat((Double) pointTemp.getJSONArray("coordinates").get(1));
                         hotelTemp.setHotelName(jsonArray.getJSONObject(i).getString("name"));
-                        Log.i("hamedddd" , hotelTemp.getHotelName() + " ");
 
                         hotelTemp.setLng((Double) pointTemp.getJSONArray("coordinates").get(0));
-                    for (int l = 0; l < lowestPricesList.length; l++){
 
-                        if (lowestPricesList[l].getName() == jsonArray.getJSONObject(i).getString("name")){
+                   for (LowestPrice temps : lowestPricesList){
 
-                            hotelTemp.setPrices(lowestPricesList[l]);
+
+                        if (temps.getName().equals(jsonArray.getJSONObject(i).getString("name"))){
+
+                            hotelTemp.setPrices(temps);
                         }
                     }
 
@@ -292,7 +299,7 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
             JSONArray jsonArray = new JSONArray(response);
 
             Log.i("mohandes man",  jsonArray.length() + "");
-            lowestPricesList = new LowestPrice[jsonArray.length()];
+
             for (int i = 0; i < jsonArray.length(); i++) {
 
                 JSONObject jsonobject =  jsonArray.getJSONObject(i);
@@ -300,17 +307,17 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
                 JSONArray jsonArray1 = jsonobject.getJSONArray("lowestPrices");
                 LowestPrice temp = new LowestPrice();
                 temp.setName(jsonobject.getString("name"));
-                Price[] getMoney = new Price[jsonArray1.length()];
+                ArrayList<Price> getMoney = new ArrayList<>();
                 for (int j = 0; j < jsonArray1.length(); j++) {
                     Price lowestPrice = new Price();
                     JSONObject jsonObject1 =  jsonArray1.getJSONObject(j);
                     lowestPrice.setPrice(jsonObject1.getString("price"));
                     lowestPrice.setHost(jsonObject1.getString("host"));
                     lowestPrice.setLink(jsonObject1.getString("link"));
-                    getMoney[j] = lowestPrice;
+                    getMoney.add(lowestPrice);
                 }
-
-                lowestPricesList[i] = temp;
+                temp.setPrice(getMoney);
+                lowestPricesList.add(temp);
             }
 
         } catch (Exception e) {
@@ -339,11 +346,6 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
 
         }
 
-    }
-
-    //setCity
-    public void setCity(String cityName){
-        this.cityName = cityName;
     }
 }
 

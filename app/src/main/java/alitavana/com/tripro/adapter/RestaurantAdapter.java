@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -32,27 +34,35 @@ import alitavana.com.tripro.model.Restaurant;
  * Created by Ali Tavana on 21/04/2017.
  */
 
-public class RestaurantAdapter extends BaseAdapter {
+public class RestaurantAdapter extends BaseAdapter  implements Filterable {
     ArrayList<FoursquareModel> restaurantList;
+    ArrayList<FoursquareModel> filteredRestaurantList;
     Context context;
     LayoutInflater inflater;
     Location currentLocation;
+    private ItemFilter mFilter = new ItemFilter();
+
 
     public RestaurantAdapter(Context context, ArrayList<FoursquareModel> restaurantList, Location location) {
         this.restaurantList = restaurantList;
+        this.filteredRestaurantList = restaurantList;
         this.context = context;
         inflater = LayoutInflater.from(context);
         currentLocation = location;
     }
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
 
     @Override
     public int getCount() {
-        return restaurantList.size();
+        return filteredRestaurantList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return restaurantList.get(i);
+        return filteredRestaurantList.get(i);
     }
 
     @Override
@@ -79,7 +89,7 @@ public class RestaurantAdapter extends BaseAdapter {
         }
 
 
-        final FoursquareModel restaurant = restaurantList.get(position);
+        FoursquareModel restaurant = filteredRestaurantList.get(position);
 
         // set name
         String Name = "";
@@ -89,8 +99,7 @@ public class RestaurantAdapter extends BaseAdapter {
         for (int i = 0; i < arr.length; i++)
             Name += arr[i] + " ";
         if (Name != null && !Name.equals("") && !Name.equals(" ")) {
-            holder.adapter_hotel_name.setText(Name);
-            Log.i("NameTest", Name);
+            holder.adapter_hotel_name.setText(Name +"-" + restaurant.getRate());
         } else
             holder.adapter_hotel_name.setText(restaurant.getName());
 
@@ -122,12 +131,52 @@ public class RestaurantAdapter extends BaseAdapter {
         location2.setLatitude(restaurant.getLatitude());
         location2.setLongitude(restaurant.getLongtitude());
         Float distance = (calculateDistance(currentLocation, location2) / 1000);
+        restaurant.setDistance(distance+"");
         if (distance > 1)
             holder.adapter_restaurant_distance.setText(Math.round(distance) + "km");
         else
             holder.adapter_restaurant_distance.setText(String.format("%.1f", distance) + "km");
 
         return convertView;
+    }
+
+
+    private class ItemFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String filterString = constraint.toString();
+
+            FilterResults results = new FilterResults();
+
+            final List<FoursquareModel> list = restaurantList;
+
+            int count = list.size();
+            final ArrayList<FoursquareModel> nlist = new ArrayList<>(count);
+
+            String cityName ;
+            String cityCountry ;
+
+            for (int i = 0; i < count; i++) {
+                cityName = list.get(i).getName();
+                if (cityName.contains(filterString)) {
+                    nlist.add(list.get(i));
+                }
+            }
+
+            results.values = nlist;
+            results.count = nlist.size();
+
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredRestaurantList = (ArrayList<FoursquareModel>) results.values;
+            notifyDataSetChanged();
+        }
+
     }
 
     public class MyViewHolder {

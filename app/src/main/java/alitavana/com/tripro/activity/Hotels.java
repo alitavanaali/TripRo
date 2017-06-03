@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -56,7 +57,9 @@ public class Hotels extends AppCompatActivity {
     ListView hotels_listView;
     //RecyclerView.LayoutManager mLayoutManager;
     LinearLayout hotels_datepicker_layout;
-    TextView hotels_children, hotels_adault, hotels_room, hotels_dateviewer, hotels_backbtn, hotels_sorting_btn, hotels_sorting_model;
+    TextView hotels_children, hotels_adault, hotels_room, hotels_dateviewer, hotels_backbtn,
+            hotels_sorting_btn, hotels_sorting_model, textviewNotFound;
+    EditText searchbox;
     Button btnLoadMore;
     ProgressDialog dialog;
     GPSTracker gps;
@@ -89,7 +92,10 @@ public class Hotels extends AppCompatActivity {
         cityName = getIntent().getStringExtra("cityName");
         // hotelsAdapter = new HotelsAdapter(getApplicationContext(), hotelList);
         // hotels_recyclerview = (RecyclerView) findViewById(R.id.hotels_recyclerview);
-        this.hotels_listView = (ListView) findViewById(R.id.hotels_listView);
+        hotels_listView = (ListView) findViewById(R.id.hotels_listView);
+
+        searchbox = (EditText) findViewById(R.id.searchbox);
+        searchbox.setHint(cityName);
         //mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         hotels_datepicker_layout = (LinearLayout) findViewById(R.id.hotels_datepicker_layout);
         hotels_children = (TextView) findViewById(R.id.hotels_children);
@@ -98,6 +104,7 @@ public class Hotels extends AppCompatActivity {
         hotels_dateviewer = (TextView) findViewById(R.id.hotels_dateviewer);
         hotels_backbtn = (TextView) findViewById(R.id.hotels_backbtn);
         hotels_sorting_model = (TextView) findViewById(R.id.hotels_sorting_model);
+        textviewNotFound = (TextView) findViewById(R.id.textviewNotFound);
 
         hotels_sorting_btn = (TextView) findViewById(R.id.hotels_sorting_btn);
         btnLoadMore = new Button(this);
@@ -144,6 +151,7 @@ public class Hotels extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        hotels_listView.setEmptyView(textviewNotFound);
     }
 
     private void setAdapter() {
@@ -176,7 +184,7 @@ public class Hotels extends AppCompatActivity {
     private void prepareHotelList() {
         HotelJson hotelJson = new HotelJson();
         if (cityName!= null && !cityName.equals("")){
-            hotelJson.setCity(cityName);
+            hotelJson.setCityName(cityName);
             Log.d("HotelsActivity", cityName);
         }
 

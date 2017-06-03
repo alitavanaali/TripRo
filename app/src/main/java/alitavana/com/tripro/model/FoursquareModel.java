@@ -20,6 +20,7 @@ public class FoursquareModel  implements Serializable {
     private String category,category_id;
     private String status, isopen;
     private String website;
+    private String distance;
 
 
     public FoursquareModel(String name, String city, String longtitude, String latitude, String address, String country, String category) {
@@ -210,5 +211,13 @@ public class FoursquareModel  implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
     }
 }

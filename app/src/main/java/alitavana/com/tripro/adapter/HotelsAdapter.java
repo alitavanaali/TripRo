@@ -104,7 +104,7 @@ public class HotelsAdapter extends BaseAdapter {
             holder.adapter_restaurant_distance.setText(String.format("%.1f", distance) + "km");
 
         //price
-        /*holder.adapter_hotel_price.setText(hotel.getPrices().getPrice()[0] + "");*/
+        holder.adapter_hotel_price.setText(hotel.getPrices().getPrice().get(0).getPrice());
 
 
         //rate
@@ -130,10 +130,11 @@ public class HotelsAdapter extends BaseAdapter {
 
                     e.printStackTrace();
                 }
+            } else {
+                Log.d("image", "null bood!");
+                holder.adapter_hotel_imageview.setImageDrawable(context.getResources().getDrawable(R.drawable.picasso_placeholder));
             }
-            else Log.d("image", "null bood!");
         }
-
 
 
         return convertView;

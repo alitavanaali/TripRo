@@ -85,6 +85,10 @@ public class HotelDetailActivity extends AppCompatActivity {
         hotelLocation.setLongitude(hotel.getLng());
         content_hotel_distance.setText((int) (calculateDistance(currenLocation, hotelLocation) / 1000)
                 + " km");
+
+        //rate
+        adapter_hotel_ratingbar.setRating(hotel.getHotelRate() * 2);
+        adapter_hotel_ratingbar2.setRating(hotel.getHotelRate() * 2);
     }
 
     private void getComponents() {
@@ -117,7 +121,6 @@ public class HotelDetailActivity extends AppCompatActivity {
                 }
             }
         });
-
         expandableTextView = (ExpandableTextView) findViewById(R.id.expandableTextView);
 
         comments_recyclerview = (RecyclerView) findViewById(R.id.comments_recyclerview);
@@ -129,6 +132,9 @@ public class HotelDetailActivity extends AppCompatActivity {
         content_hotel_address = (TextView) findViewById(R.id.content_hotel_address);
 
         hotel_detail_map_linear = (LinearLayout) findViewById(R.id.hotel_detail_map_linear);
+
+        adapter_hotel_ratingbar = (RatingBar) findViewById(R.id.adapter_hotel_ratingbar);
+        adapter_hotel_ratingbar2 = (RatingBar) findViewById(R.id.adapter_hotel_ratingbar2);
     }
 
     private void getIntents(){
@@ -173,13 +179,13 @@ public class HotelDetailActivity extends AppCompatActivity {
     }
 
     private void prepareComments() {
-        Comment comment1 = new Comment("هتل خوب با برخورد مناسب", "یکی از بهترین هتل هایی بود که تا حالا رفتم", "2.6", "95/12/3");
+        /*Comment comment1 = new Comment("هتل خوب با برخورد مناسب", "یکی از بهترین هتل هایی بود که تا حالا رفتم", "2.6", "95/12/3");
         Comment comment2 = new Comment("تخت های کثیف ضعف بزرگ", "تخت ها متاسفانه همه کثیف بودند و رسیدگی نمی شد", "2.6", "96/1/15");
         commentList.add(comment1);
         commentList.add(comment2);
         commentList.add(comment1);
         commentList.add(comment2);
-        commentList.add(comment1);
+        commentList.add(comment1);*/
     }
 
     private void setFonts() {

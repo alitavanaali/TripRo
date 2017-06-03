@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static alitavana.com.tripro.activity.MainActivity.DateEnter;
 import static alitavana.com.tripro.activity.MainActivity.DateExit;
+import static alitavana.com.tripro.activity.MainActivity.DayBetween;
 
 /**
  * Created by Ali Tavana on 13/05/2017.
@@ -39,6 +41,7 @@ public class DatePickerActivityHotel extends AppCompatActivity {
     PersianCalendarHandler calendarHandler;
     PersianDate today;
     Boolean isRaft = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +73,7 @@ public class DatePickerActivityHotel extends AppCompatActivity {
             @Override
             public void onChanged(PersianDate persianDate) {
                 datepicker_month_textview.setText(calendarHandler.getMonthName(persianDate) +
-                " " + persianDate.getYear());
+                        " " + persianDate.getYear());
             }
         });
         datepicker_raft_tv.setOnClickListener(new View.OnClickListener() {
@@ -90,15 +93,18 @@ public class DatePickerActivityHotel extends AppCompatActivity {
         calendarHandler.setOnDayClickedListener(new OnDayClickedListener() {
             @Override
             public void onClick(PersianDate persianDate) {
-                if (isRaft){
+                if (isRaft) {
                     DateEnter = persianDate;
                     datepicker_raft_tv.setText("تاریخ ورود" + "\n" + getPersianDateStyle(persianDate));
                     isRaft = false;
                     changeTabColor();
-                }
-                else {
+                    Log.i("DatePicker", DateEnter.isLeapYear() + "");
+                } else {
                     DateExit = persianDate;
                     datepicker_bargasht_tv.setText("تاریخ خروج" + "\n" + getPersianDateStyle(persianDate));
+
+                    // calculate days between
+                    DayBetween = dayBetweenTwoDate(DateEnter, DateExit);
                 }
             }
         });
@@ -127,14 +133,13 @@ public class DatePickerActivityHotel extends AppCompatActivity {
         today = calendarHandler.getToday();
     }
 
-    private void changeTabColor(){
-        if (isRaft){
+    private void changeTabColor() {
+        if (isRaft) {
             datepicker_raft_tv.setBackgroundResource(R.color.colorPrimary);
             datepicker_raft_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
             datepicker_bargasht_tv.setBackgroundResource(R.color.white);
             datepicker_bargasht_tv.setTextColor(ContextCompat.getColor(this, R.color.text_header_color));
-        }
-        else {
+        } else {
             datepicker_bargasht_tv.setBackgroundResource(R.color.colorPrimary);
             datepicker_bargasht_tv.setTextColor(ContextCompat.getColor(this, R.color.white));
             datepicker_raft_tv.setBackgroundResource(R.color.white);
@@ -142,7 +147,87 @@ public class DatePickerActivityHotel extends AppCompatActivity {
         }
     }
 
-    private String getPersianDateStyle(PersianDate persianDate){
+    private int dayBetweenTwoDate(PersianDate dateEnter, PersianDate dateExit) {
+        int enterDayOfYear = 0;
+        int exitDayOfYear = 0;
+        if (dateEnter.getYear() == dateExit.getYear()) {
+            Log.i("DatePicker", "dateEnter.getMonth(): "+dateEnter.getMonth() + " dateExit.getMonth(): " +dateExit.getMonth());
+            // calculate how many days are from first day of year
+            enterDayOfYear += dateEnter.getDayOfMonth();
+            if (dateEnter.getMonth() <= 7) {
+                for (int i = dateEnter.getMonth(); i > 1; i--) {
+                    enterDayOfYear = enterDayOfYear + 31;
+                }
+            } else {
+                for (int j = dateEnter.getMonth() - 7; j != 0; j--) {
+                    enterDayOfYear = enterDayOfYear + 30;
+                }
+                enterDayOfYear = enterDayOfYear + 186;
+            }
+
+            // calculate how many days are from first day of year
+            exitDayOfYear += dateExit.getDayOfMonth();
+            if (dateExit.getMonth() <= 7) {
+                for (int i = dateExit.getMonth(); i > 1; i--) {
+                    exitDayOfYear += 31;
+                }
+            } else {
+                for (int j = dateExit.getMonth() - 7; j != 0; j--) {
+                    exitDayOfYear += 30;
+                }
+                exitDayOfYear = exitDayOfYear + 186;
+            }
+            Log.i("DatePicker", "enterDayOfYear: " + enterDayOfYear + " exitDayOfYear: " + exitDayOfYear);
+            return exitDayOfYear - enterDayOfYear;
+        }
+        else {
+            // calculate how many days are from first day of year
+            if (!dateEnter.isLeapYear()){
+                enterDayOfYear += dateEnter.getDayOfMonth();
+                if (dateEnter.getMonth() <= 7) {
+                    for (int i = dateEnter.getMonth(); i > 1; i--) {
+                        enterDayOfYear = enterDayOfYear + 31;
+                    }
+                } else {
+                    for (int j = dateEnter.getMonth() - 7; j != 0; j--) {
+                        enterDayOfYear = enterDayOfYear + 30;
+                    }
+                    enterDayOfYear = enterDayOfYear + 186;
+                }
+                enterDayOfYear = 365 - enterDayOfYear;
+            }
+            else {
+                enterDayOfYear += dateEnter.getDayOfMonth();
+                if (dateEnter.getMonth() <= 7) {
+                    for (int i = dateEnter.getMonth(); i > 1; i--) {
+                        enterDayOfYear = enterDayOfYear + 31;
+                    }
+                } else {
+                    for (int j = dateEnter.getMonth() - 7; j != 0; j--) {
+                        enterDayOfYear = enterDayOfYear + 30;
+                    }
+                    enterDayOfYear = enterDayOfYear + 186;
+                }
+                enterDayOfYear = 366 - enterDayOfYear;
+            }
+            // calculate how many days are from first day of year
+            exitDayOfYear += dateExit.getDayOfMonth();
+            if (dateExit.getMonth() <= 7) {
+                for (int i = dateExit.getMonth(); i > 1; i--) {
+                    exitDayOfYear += 31;
+                }
+            } else {
+                for (int j = dateExit.getMonth() - 7; j != 0; j--) {
+                    exitDayOfYear += 30;
+                }
+                exitDayOfYear = exitDayOfYear + 186;
+            }
+            Log.i("DatePicker", "enterDayOfYear: " + enterDayOfYear + " exitDayOfYear: " + exitDayOfYear);
+            return exitDayOfYear + enterDayOfYear;
+        }
+    }
+
+    private String getPersianDateStyle(PersianDate persianDate) {
         return persianDate.getYear() + "/" + persianDate.getMonth() + "/" + persianDate.getDayOfMonth();
     }
 

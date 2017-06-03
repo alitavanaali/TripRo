@@ -131,26 +131,12 @@ public class RestaurantActivity extends AppCompatActivity implements AdapterView
         switch (SortingModel) {
             case 1:
                 hotels_sorting_model.setText("مرتب سازی: رتبه بندی");
-                Collections.sort(restaurantList, new Comparator() {
-                    @Override
-                    public int compare(Object o1, Object o2) {
-                        FoursquareModel p1 = (FoursquareModel) o1;
-                        FoursquareModel p2 = (FoursquareModel) o2;
-                        return p1.getRate().compareToIgnoreCase(p2.getRate());
-                    }
-                });
-                restaurantAdapter.notifyDataSetChanged();
-                break;
-            case 2:
-                hotels_sorting_model.setText("مرتب سازی: قیمت، نزولی");
-                break;
-            case 3:
-                hotels_sorting_model.setText("مرتب سازی:قیمت، صعودی");
+                sortByRate();
                 break;
             case 4:
                 hotels_sorting_model.setText("مرتب سازی: مسافت");
+                sortByDistance();
                 break;
-
         }
     }
 
@@ -164,9 +150,20 @@ public class RestaurantActivity extends AppCompatActivity implements AdapterView
         btnLoadMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                offset += 30;
-                prepareRestaurantList();
-                restaurantAdapter.notifyDataSetChanged();
+                dialog = ProgressDialog.show(RestaurantActivity.this, "",
+                        "Loading. Please wait...", true);
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        offset += 30;
+                        prepareRestaurantList();
+                        setSortingType();
+                        restaurantAdapter.notifyDataSetChanged();
+                        dialog.cancel();
+                    }
+                }, 100);
+
             }
         });
         restaurant_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -194,6 +191,7 @@ public class RestaurantActivity extends AppCompatActivity implements AdapterView
         restaurant_listview.setAdapter(restaurantAdapter);
         restaurant_listview.addFooterView(btnLoadMore);
         dialog.cancel();
+        setSortingType();
     }
 
     private void prepareRestaurantList() {
@@ -201,7 +199,7 @@ public class RestaurantActivity extends AppCompatActivity implements AdapterView
         restaurantForSquare.setOffset(offset);
         restaurantForSquare.setContext(this);
         if (lat != null && lng != null && !lat.equals("") && !lng.equals("")) {
-            restaurantForSquare.setLocation(lat,lng);
+            restaurantForSquare.setLocation(lat, lng);
         }
         try {
             ArrayList<FoursquareModel> newFoursquareModels = new ArrayList<>();
@@ -209,12 +207,12 @@ public class RestaurantActivity extends AppCompatActivity implements AdapterView
             for (int number = 0; number < newFoursquareModels.size(); ++number) {
                 restaurantList.add(newFoursquareModels.get(number));
             }
+            setSortingType();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
     }
 
     private void getIntents() {
@@ -231,8 +229,6 @@ public class RestaurantActivity extends AppCompatActivity implements AdapterView
     @Override
     protected void onResume() {
         super.onResume();
-        setSortingType();
-
     }
 
     private void getCurrentLocation() {
@@ -265,30 +261,43 @@ public class RestaurantActivity extends AppCompatActivity implements AdapterView
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        dialog = ProgressDialog.show(this, "",
+                "Loading. Please wait...", true);
+        Log.i("onActivityResult", "called!");
+        final Handler handler2 = new Handler();
+        handler2.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                restaurantList.clear();
+                restaurantAdapter.notifyDataSetChanged();
+                offset = 1;
+                prepareRestaurantList();
+                dialog.cancel();
+            }
+        }, 100);
+
 
         if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
-                /*String result=data.getStringExtra("result");*/
-                dialog = ProgressDialog.show(this, "",
-                        "Loading. Please wait...", true);
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        restaurantList.clear();
-                        offset = 1;
-                        prepareRestaurantList();
-                        restaurantAdapter.notifyDataSetChanged();
-                        dialog.cancel();
-                    }
-                }, 100);
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                //Write your code if there's no result
-            }
+
         }
     }
 
+    private void sortByRate() {
+        if (restaurantList != null && restaurantList.size() != 0)
+            Collections.sort(restaurantList, new Comparator() {
+                @Override
+                public int compare(Object o1, Object o2) {
+                    FoursquareModel p1 = (FoursquareModel) o1;
+                    FoursquareModel p2 = (FoursquareModel) o2;
+                    return p2.getRate().compareToIgnoreCase(p1.getRate());
+                }
+            });
+
+    }
+
+    private void sortByDistance() {
+        Log.d("Sort", "sort zade shod!");
+    }
 
 }
 

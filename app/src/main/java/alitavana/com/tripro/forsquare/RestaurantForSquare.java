@@ -59,6 +59,8 @@ public class RestaurantForSquare extends AsyncTask<View, Void, ArrayList<Foursqu
                     "&price=" + prices +
                     "&section=food" +
                     "&venuePhotos=1" +
+                    "&sortByDistance=1" +
+                    "&radius=10000" +
                     "&offset=" + offset +
                     "&oauth_token=AZ1XZL5WKYB0CXYHABBKM1TAN0MJSYZF4FX4G34JSGVQPX5S&v=20170522";
         }
@@ -67,6 +69,8 @@ public class RestaurantForSquare extends AsyncTask<View, Void, ArrayList<Foursqu
                     + "ll=" + currentLocation.getLatitude() + "," + currentLocation.getLongitude() +
                     "&price=" + prices +
                     "&section=food" +
+                    "&radius=10000" +
+                    "&sortByDistance=1" +
                     "&venuePhotos=1" +
                     "&offset=" + offset +
                     "&oauth_token=AZ1XZL5WKYB0CXYHABBKM1TAN0MJSYZF4FX4G34JSGVQPX5S&v=20170522";
@@ -173,7 +177,6 @@ public class RestaurantForSquare extends AsyncTask<View, Void, ArrayList<Foursqu
 
     private static String convertTimeToPersian(String englishString){
         String newPersian = englishString;
-        System.out.println(newPersian);
         if (newPersian.contains("Likely open")){
             newPersian = newPersian.replace("Likely open", "در حال حاضر باز است");
         }
@@ -339,6 +342,9 @@ public class RestaurantForSquare extends AsyncTask<View, Void, ArrayList<Foursqu
                             }
                             if (jsonObject1.getJSONObject("venue").has("rating")) {
                                 poi.setRate(jsonObject1.getJSONObject("venue").getString("rating"));
+                            }
+                            else {
+                                poi.setRate("0");
                             }
                             if (jsonObject1.getJSONObject("venue").has("url")) {
                                 poi.setWebsite(jsonObject1.getJSONObject("venue").getString("url"));

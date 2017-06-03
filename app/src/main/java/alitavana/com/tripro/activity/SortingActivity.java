@@ -24,7 +24,7 @@ import static alitavana.com.tripro.activity.MainActivity.SortingModel;
  */
 
 public class SortingActivity extends AppCompatActivity {
-    Button sorting_rotbebandi, sorting_nozooli, sorting_soudi, sorting_masafat, sorting_price4,
+    Button sorting_rotbebandi, sorting_masafat, sorting_price4,
             sorting_price3, sorting_price2, sorting_price1, sorting_emal_btn;
 
     @Override
@@ -45,8 +45,6 @@ public class SortingActivity extends AppCompatActivity {
         toolbar_header.setText("مرتب سازی");
 
         sorting_rotbebandi = (Button) findViewById(R.id.sorting_rotbebandi);
-        sorting_nozooli = (Button) findViewById(R.id.sorting_nozooli);
-        sorting_soudi = (Button) findViewById(R.id.sorting_soudi);
         sorting_masafat = (Button) findViewById(R.id.sorting_masafat);
         sorting_price4 = (Button) findViewById(R.id.sorting_price4);
         sorting_price3 = (Button) findViewById(R.id.sorting_price3);
@@ -101,8 +99,18 @@ public class SortingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("result","ok");
-                setResult(Activity.RESULT_OK,returnIntent);
+                switch (SortingModel) {
+                    case 1:
+                        // rate
+                        returnIntent.putExtra("result","ok");
+                        setResult(1,returnIntent);
+                        break;
+                    case 4:
+                        // masafat
+                        returnIntent.putExtra("result","ok");
+                        setResult(4,returnIntent);
+                        break;
+                }
                 finish();
             }
         });
@@ -111,10 +119,6 @@ public class SortingActivity extends AppCompatActivity {
     private void clearButtons() {
         sorting_rotbebandi.setCompoundDrawables(null, null, null, null);
         sorting_rotbebandi.setTextColor(getResources().getColor(R.color.black));
-        sorting_nozooli.setCompoundDrawables(null, null, null, null);
-        sorting_nozooli.setTextColor(getResources().getColor(R.color.black));
-        sorting_soudi.setCompoundDrawables(null, null, null, null);
-        sorting_soudi.setTextColor(getResources().getColor(R.color.black));
         sorting_masafat.setCompoundDrawables(null, null, null, null);
         sorting_masafat.setTextColor(getResources().getColor(R.color.black));
     }
@@ -162,16 +166,6 @@ public class SortingActivity extends AppCompatActivity {
                 sorting_rotbebandi.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_done_black_24dp, 0, 0, 0);
                 sorting_rotbebandi.setTextColor(getResources().getColor(R.color.colorPrimary));
                 break;
-            case R.id.sorting_nozooli:
-                SortingModel = 2;
-                sorting_nozooli.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_done_black_24dp, 0, 0, 0);
-                sorting_nozooli.setTextColor(getResources().getColor(R.color.colorPrimary));
-                break;
-            case R.id.sorting_soudi:
-                SortingModel = 3;
-                sorting_soudi.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_done_black_24dp, 0, 0, 0);
-                sorting_soudi.setTextColor(getResources().getColor(R.color.colorPrimary));
-                break;
             case R.id.sorting_masafat:
                 SortingModel = 4;
                 sorting_masafat.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_done_black_24dp, 0, 0, 0);
@@ -186,14 +180,6 @@ public class SortingActivity extends AppCompatActivity {
             case 1:
                 clearButtons();
                 setSort(R.id.sorting_rotbebandi);
-                break;
-            case 2:
-                clearButtons();
-                setSort(R.id.sorting_nozooli);
-                break;
-            case 3:
-                clearButtons();
-                setSort(R.id.sorting_soudi);
                 break;
             case 4:
                 clearButtons();
