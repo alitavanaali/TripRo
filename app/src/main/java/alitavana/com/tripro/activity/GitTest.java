@@ -5,4 +5,6 @@ package alitavana.com.tripro.activity;
  */
 
 public class GitTest {
+    public GitTest() {
+    }
 }
