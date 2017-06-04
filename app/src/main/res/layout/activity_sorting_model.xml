@@ -122,35 +122,6 @@
                 android:textAlignment="textStart"
                 android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/sorting_nozooli"
-                fontPath="font/irsans.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/card_background_bottom_shadow"
-                android:drawableLeft="@drawable/ic_done_black_24dp"
-                android:drawablePadding="0dp"
-                android:onClick="sortingClicksHandler"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="@string/gheymat_nozooli"
-                android:textAlignment="textStart"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/sorting_soudi"
-                fontPath="font/irsans.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/card_background_bottom_shadow"
-                android:drawablePadding="10dp"
-                android:onClick="sortingClicksHandler"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="@string/gheymat_soodi"
-                android:textAlignment="textStart"
-                android:textSize="18sp" />
-
 
 
         </LinearLayout>

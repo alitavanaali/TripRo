@@ -58,6 +58,7 @@
         <activity android:name=".activity.RestaurantActivityLevel1"/>
         <activity android:name=".activity.ProfileActivity"/>
         <activity android:name=".activity.HotelsActivityLevel1"/>
+        <activity android:name=".activity.testActivity"/>
     </application>
 
 </manifest>

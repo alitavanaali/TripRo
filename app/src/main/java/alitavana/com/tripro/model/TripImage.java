@@ -1,12 +1,15 @@
 package alitavana.com.tripro.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**
  * Created by eric on 5/29/17.
  */
 
-public class TripImage implements Serializable{
+public class TripImage implements Serializable, Parcelable {
 
     private String hash;
     private String downloadLink;
@@ -43,5 +46,18 @@ public class TripImage implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString (hash);
+        parcel.writeString (downloadLink);
+        parcel.writeString (name);
+        parcel.writeByteArray (photoValue);
     }
 }

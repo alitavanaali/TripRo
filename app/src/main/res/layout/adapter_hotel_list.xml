@@ -85,6 +85,7 @@
     </LinearLayout>
     <ImageView
         android:id="@+id/adapter_hotel_imageview"
+        android:scaleType="centerCrop"
         android:src="@drawable/sample_square"
         android:layout_width="100dp"
         android:layout_height="100dp" />

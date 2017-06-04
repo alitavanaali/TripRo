@@ -118,4 +118,12 @@
         android:layout_width="match_parent"
         android:background="@color/white"
         android:layout_height="match_parent" />
+
+    <TextView
+        android:textSize="@dimen/medium_text_size"
+        android:gravity="center"
+        android:id="@+id/textviewNotFound"
+        android:text="@string/not_found"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

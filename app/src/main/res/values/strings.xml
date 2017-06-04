@@ -126,5 +126,6 @@
     <string name="Complete">انجام شد</string>
     <string name="Error">خطا</string>
     <string name="Load">مشاهده بیشتر</string>
+    <string name="not_found">با مشخصات وارد شده موردی یافت نشد!</string>
 
 </resources>

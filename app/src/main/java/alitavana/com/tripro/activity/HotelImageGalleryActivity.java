@@ -13,8 +13,11 @@ import java.util.ArrayList;
 
 import alitavana.com.tripro.R;
 import alitavana.com.tripro.adapter.HotelGalleryAdapter;
+import alitavana.com.tripro.adapter.HotelNoPicassoGalleryAdapter;
 import alitavana.com.tripro.forsquare.PhotosForSquare;
+import alitavana.com.tripro.model.Hotel;
 import alitavana.com.tripro.model.PictureModel;
+import alitavana.com.tripro.model.TripImage;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -24,9 +27,9 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class HotelImageGalleryActivity extends AppCompatActivity {
     GridView hotel_gallery_grid_view;
-    HotelGalleryAdapter hotelGalleryAdapter;
-    ArrayList<PictureModel> pictureList = new ArrayList<>();
-
+    HotelNoPicassoGalleryAdapter HotelNoPicassoGalleryAdapter;
+    ArrayList<TripImage> pictureList = new ArrayList<>();
+    Hotel hotel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,7 @@ public class HotelImageGalleryActivity extends AppCompatActivity {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+        getIntents();
         getComponents();
         prepareData();
         setAdapter();
@@ -52,32 +56,17 @@ public class HotelImageGalleryActivity extends AppCompatActivity {
     }
 
     private void prepareData() {
-        /*PictureModel pictureModel1 = new PictureModel("http://hotelyar.com/hotel/313/pic/313/1.jpg", "پل خاجو", "علی توانا", "http://hotelyar.com/hotel/313/pic/313/1.jpg");
-        PictureModel pictureModel2 = new PictureModel("http://hotelyar.com/hotel/313/pic/313/6.jpg", "سی و سه پل", "جواد راضی", "http://hotelyar.com/hotel/313/pic/313/1.jpg");
-        pictureList.add(pictureModel1);
-        pictureList.add(pictureModel2);
-        pictureList.add(pictureModel1);
-        pictureList.add(pictureModel2);
-        pictureList.add(pictureModel1);
-        pictureList.add(pictureModel2);
-        pictureList.add(pictureModel1);
-        pictureList.add(pictureModel2);
-        pictureList.add(pictureModel1);
-        pictureList.add(pictureModel2);
-        pictureList.add(pictureModel1);
-        pictureList.add(pictureModel2);
-        pictureList.add(pictureModel1);
-        pictureList.add(pictureModel2);
-        pictureList.add(pictureModel1);
-        pictureList.add(pictureModel2);
-        pictureList.add(pictureModel1);
-        pictureList.add(pictureModel2);*/
+        pictureList = hotel.getPhotos();
+    }
+
+    private void getIntents(){
+        hotel = (Hotel) getIntent().getSerializableExtra("Hotel");
     }
 
     private void setAdapter() {
-        hotelGalleryAdapter = new HotelGalleryAdapter(getApplicationContext(), pictureList);
+        HotelNoPicassoGalleryAdapter = new HotelNoPicassoGalleryAdapter(getApplicationContext(), pictureList);
 
-        hotel_gallery_grid_view.setAdapter(hotelGalleryAdapter);
+        hotel_gallery_grid_view.setAdapter(HotelNoPicassoGalleryAdapter);
         hotel_gallery_grid_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {

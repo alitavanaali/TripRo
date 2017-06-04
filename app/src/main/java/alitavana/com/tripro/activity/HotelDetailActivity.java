@@ -2,6 +2,8 @@ package alitavana.com.tripro.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -53,7 +56,8 @@ public class HotelDetailActivity extends AppCompatActivity {
     LinearLayout hotel_detail_map_linear;
     Hotel hotel;
     RatingBar adapter_hotel_ratingbar, adapter_hotel_ratingbar2;
-
+    ImageView imageimage;
+    TextView toolbar_header;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,23 +93,39 @@ public class HotelDetailActivity extends AppCompatActivity {
         //rate
         adapter_hotel_ratingbar.setRating(hotel.getHotelRate() * 2);
         adapter_hotel_ratingbar2.setRating(hotel.getHotelRate() * 2);
+
+        Log.i("HotelDetail", hotel.getFeatures());
+
+        //Image
+        if (hotel.getPhotos() != null) {
+            if (hotel.getPhotos().size() > 0) {
+                try {
+                    Log.d("this is test ------>", "91.99.96.10:8102/PondMS/" + hotel.getPhotos().get(0).getDownloadLink());
+                    System.out.println("91.99.96.10:8102/PondMS/" + hotel.getPhotos().get(0).getDownloadLink());
+                    byte[] data = hotel.getPhotos().get(0).getPhotoValue();
+                    Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    imageimage.setImageBitmap(bmp);
+                    Log.d("hoteladapter", "bmp: " + bmp);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.d("image", "null bood!");
+                imageimage.setImageDrawable(getResources().getDrawable(R.drawable.picasso_placeholder));
+            }
+        }
     }
 
     private void getComponents() {
-        TextView toolbar_header = (TextView) findViewById(R.id.toolbar_title);
+        toolbar_header = (TextView) findViewById(R.id.toolbar_title);
         toolbar_header.setText(hotel.getName());
-
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("font/irsans.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
-
         fab = (FloatingActionButton) findViewById(R.id.fab);
-
-
         hotel_detail_back_btn = (ImageView) findViewById(R.id.hotel_detail_back_btn);
-
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
@@ -114,27 +134,26 @@ public class HotelDetailActivity extends AppCompatActivity {
                     // Collapsed
                     FLAG_COLLAPSED = true;
                     hotel_detail_back_btn.setVisibility(View.VISIBLE);
+                    toolbar_header.setVisibility(View.VISIBLE);
                 } else if (verticalOffset == 0) {
                     FLAG_COLLAPSED = false;
                     hotel_detail_back_btn.setVisibility(View.INVISIBLE);
+                    toolbar_header.setVisibility(View.INVISIBLE);
                 } else {
                 }
             }
         });
         expandableTextView = (ExpandableTextView) findViewById(R.id.expandableTextView);
-
         comments_recyclerview = (RecyclerView) findViewById(R.id.comments_recyclerview);
         adapter_hotel_NestedScrollView = (NestedScrollView) findViewById(R.id.adapter_hotel_NestedScrollView);
-
         content_hotel_ettelaatehotel = (TextView) findViewById(R.id.content_hotel_ettelaatehotel);
         content_hotel_name = (TextView) findViewById(R.id.content_hotel_name);
         content_hotel_distance = (TextView) findViewById(R.id.content_hotel_distance);
         content_hotel_address = (TextView) findViewById(R.id.content_hotel_address);
-
         hotel_detail_map_linear = (LinearLayout) findViewById(R.id.hotel_detail_map_linear);
-
         adapter_hotel_ratingbar = (RatingBar) findViewById(R.id.adapter_hotel_ratingbar);
         adapter_hotel_ratingbar2 = (RatingBar) findViewById(R.id.adapter_hotel_ratingbar2);
+        imageimage= (ImageView) findViewById(R.id.imageimage);
     }
 
     private void getIntents(){
@@ -159,6 +178,15 @@ public class HotelDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HotelDetailActivity.this, HotelImageGalleryActivity.class);
+                intent.putExtra("Hotel", hotel);
+                startActivity(intent);
+            }
+        });
+        imageimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HotelDetailActivity.this, HotelImageGalleryActivity.class);
+                intent.putExtra("Hotel", hotel);
                 startActivity(intent);
             }
         });
