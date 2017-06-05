@@ -58,8 +58,7 @@ public class HotelNoPicassoGalleryAdapter  extends BaseAdapter {
         // Image
         //Image
         try {
-            Log.d("this is test ------>", "91.99.96.10:8102/PondMS/" +  pictureList.get(position).getDownloadLink());
-            System.out.println("91.99.96.10:8102/PondMS/" + pictureList.get(position).getDownloadLink());
+
             byte[] data = pictureList.get(position).getPhotoValue();
             Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
             imageView.setImageBitmap(bmp);

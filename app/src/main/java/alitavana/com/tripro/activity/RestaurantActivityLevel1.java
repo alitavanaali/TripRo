@@ -34,8 +34,6 @@ import alitavana.com.tripro.model.City;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-import static alitavana.com.tripro.activity.MainActivity.MabdaCity;
-import static alitavana.com.tripro.activity.MainActivity.MaghsadCity;
 
 /**
  * Created by Ali Tavana on 27/05/2017.

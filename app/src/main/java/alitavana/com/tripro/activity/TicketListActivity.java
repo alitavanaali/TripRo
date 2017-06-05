@@ -27,10 +27,6 @@ import alitavana.com.tripro.typeface.CustomTypefaceSpan;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-import static alitavana.com.tripro.activity.MainActivity.DateEnter;
-import static alitavana.com.tripro.activity.MainActivity.DateExit;
-import static alitavana.com.tripro.activity.MainActivity.MabdaCity;
-import static alitavana.com.tripro.activity.MainActivity.MaghsadCity;
 
 /**
  * Created by Ali Tavana on 13/05/2017.

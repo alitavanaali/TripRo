@@ -29,12 +29,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import alitavana.com.tripro.AliPersianCalendar;
 import alitavana.com.tripro.R;
 import alitavana.com.tripro.adapter.HotelsAdapter;
 import alitavana.com.tripro.gps.GPSTracker;
 import alitavana.com.tripro.model.Hotel;
 import alitavana.com.tripro.objJson.HotelJson;
 import alitavana.com.tripro.typeface.CustomTypefaceSpan;
+import ir.mirrajabi.persiancalendar.core.models.PersianDate;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -185,6 +187,8 @@ public class Hotels extends AppCompatActivity {
         HotelJson hotelJson = new HotelJson();
         if (cityName!= null && !cityName.equals("")){
             hotelJson.setCityName(cityName);
+            hotelJson.setDate(DateEnter.getYear()+"/"+DateEnter.getMonth()+"/"+DateEnter.getDayOfMonth());
+            hotelJson.setNights(dayBetweenTwoDate(DateEnter, DateExit) +"");
             Log.d("HotelsActivity", cityName);
         }
 
@@ -228,6 +232,86 @@ public class Hotels extends AppCompatActivity {
             currentLocation.setLatitude(35.6892);
             currentLocation.setLongitude(51.3890);
 
+        }
+    }
+
+    private int dayBetweenTwoDate(PersianDate dateEnter, PersianDate dateExit) {
+        int enterDayOfYear = 0;
+        int exitDayOfYear = 0;
+        if (dateEnter.getYear() == dateExit.getYear()) {
+            Log.i("DatePicker", "dateEnter.getMonth(): "+dateEnter.getMonth() + " dateExit.getMonth(): " +dateExit.getMonth());
+            // calculate how many days are from first day of year
+            enterDayOfYear += dateEnter.getDayOfMonth();
+            if (dateEnter.getMonth() <= 7) {
+                for (int i = dateEnter.getMonth(); i > 1; i--) {
+                    enterDayOfYear = enterDayOfYear + 31;
+                }
+            } else {
+                for (int j = dateEnter.getMonth() - 7; j != 0; j--) {
+                    enterDayOfYear = enterDayOfYear + 30;
+                }
+                enterDayOfYear = enterDayOfYear + 186;
+            }
+
+            // calculate how many days are from first day of year
+            exitDayOfYear += dateExit.getDayOfMonth();
+            if (dateExit.getMonth() <= 7) {
+                for (int i = dateExit.getMonth(); i > 1; i--) {
+                    exitDayOfYear += 31;
+                }
+            } else {
+                for (int j = dateExit.getMonth() - 7; j != 0; j--) {
+                    exitDayOfYear += 30;
+                }
+                exitDayOfYear = exitDayOfYear + 186;
+            }
+            Log.i("DatePicker", "enterDayOfYear: " + enterDayOfYear + " exitDayOfYear: " + exitDayOfYear);
+            return exitDayOfYear - enterDayOfYear;
+        }
+        else {
+            // calculate how many days are from first day of year
+            if (!dateEnter.isLeapYear()){
+                enterDayOfYear += dateEnter.getDayOfMonth();
+                if (dateEnter.getMonth() <= 7) {
+                    for (int i = dateEnter.getMonth(); i > 1; i--) {
+                        enterDayOfYear = enterDayOfYear + 31;
+                    }
+                } else {
+                    for (int j = dateEnter.getMonth() - 7; j != 0; j--) {
+                        enterDayOfYear = enterDayOfYear + 30;
+                    }
+                    enterDayOfYear = enterDayOfYear + 186;
+                }
+                enterDayOfYear = 365 - enterDayOfYear;
+            }
+            else {
+                enterDayOfYear += dateEnter.getDayOfMonth();
+                if (dateEnter.getMonth() <= 7) {
+                    for (int i = dateEnter.getMonth(); i > 1; i--) {
+                        enterDayOfYear = enterDayOfYear + 31;
+                    }
+                } else {
+                    for (int j = dateEnter.getMonth() - 7; j != 0; j--) {
+                        enterDayOfYear = enterDayOfYear + 30;
+                    }
+                    enterDayOfYear = enterDayOfYear + 186;
+                }
+                enterDayOfYear = 366 - enterDayOfYear;
+            }
+            // calculate how many days are from first day of year
+            exitDayOfYear += dateExit.getDayOfMonth();
+            if (dateExit.getMonth() <= 7) {
+                for (int i = dateExit.getMonth(); i > 1; i--) {
+                    exitDayOfYear += 31;
+                }
+            } else {
+                for (int j = dateExit.getMonth() - 7; j != 0; j--) {
+                    exitDayOfYear += 30;
+                }
+                exitDayOfYear = exitDayOfYear + 186;
+            }
+            Log.i("DatePicker", "enterDayOfYear: " + enterDayOfYear + " exitDayOfYear: " + exitDayOfYear);
+            return exitDayOfYear + enterDayOfYear;
         }
     }
 

@@ -99,7 +99,7 @@ public class RestaurantAdapter extends BaseAdapter  implements Filterable {
         for (int i = 0; i < arr.length; i++)
             Name += arr[i] + " ";
         if (Name != null && !Name.equals("") && !Name.equals(" ")) {
-            holder.adapter_hotel_name.setText(Name +"-" + restaurant.getRate());
+            holder.adapter_hotel_name.setText(Name);
         } else
             holder.adapter_hotel_name.setText(restaurant.getName());
 

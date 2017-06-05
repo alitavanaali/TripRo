@@ -51,7 +51,8 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
 
     String cityName;
     private String jsessionid="";
-
+    String date;
+    String nights;
     private String things_to_doUid = "";
 
     String url="";
@@ -131,14 +132,12 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
         }
     }
 
-
-
     //hotels low details
     private void getHotelsListPrice() throws Exception{
 
         Connection.Response myResponse = Jsoup.connect("http://91.99.96.10:8102/JustRO/rest/search/hotels/items?city="
-                + this.cityName + "&check_in=1396/03/13&nights=2&adults=2&children=2").userAgent("Mozilla").followRedirects(true).header("Cookie" , jsessionid).header("Content-Type" , "application/json").ignoreContentType(true).ignoreHttpErrors(true).method(Connection.Method.GET).execute();
-
+                + this.cityName + "&check_in=" + date + "&nights=" + nights + "&adults=2&children=2").userAgent("Mozilla").followRedirects(true).header("Cookie" , jsessionid).header("Content-Type" , "application/json").ignoreContentType(true).ignoreHttpErrors(true).method(Connection.Method.GET).execute();
+        Log.i("HotelJson", myResponse + "");
         try {
 
             parseHotelsLowDetailsFromServer(myResponse.body());
@@ -250,9 +249,9 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
                                 if (temp.getJSONArray("Images").getJSONObject(j).has("downloadLink")) {
                                     TripImage tripImage = new TripImage();
                                     tripImage.setDownloadLink(jsonObjectImages.getString("downloadLink"));
-                                    if (j == 0) {
+                                    //if (j == 0) {
                                         tripImage.setPhotoValue(getImage("http://91.99.96.10:8102/PondMS/" + tripImage.getDownloadLink()));
-                                    }
+                                    //}
                                     imagesTmp.add(tripImage);
                                 }
                             }
@@ -346,6 +345,14 @@ public class HotelJson extends AsyncTask< View,Void, ArrayList<Hotel>>{
 
         }
 
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setNights(String nights) {
+        this.nights = nights;
     }
 }
 

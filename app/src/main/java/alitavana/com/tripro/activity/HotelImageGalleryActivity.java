@@ -1,5 +1,6 @@
 package alitavana.com.tripro.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by Ali Tavana on 06/05/2017.
  */
 
-public class HotelImageGalleryActivity extends AppCompatActivity {
+public class HotelImageGalleryActivity extends Activity {
     GridView hotel_gallery_grid_view;
     HotelNoPicassoGalleryAdapter HotelNoPicassoGalleryAdapter;
     ArrayList<TripImage> pictureList = new ArrayList<>();
@@ -70,7 +71,7 @@ public class HotelImageGalleryActivity extends AppCompatActivity {
         hotel_gallery_grid_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(HotelImageGalleryActivity.this, ImageFullScreenActivity.class);
+                Intent intent = new Intent(HotelImageGalleryActivity.this, ImageFullScreenActivityHotel.class);
                 intent.putParcelableArrayListExtra("pictureList", pictureList);
                 intent.putExtra("position", position);
                 startActivity(intent);

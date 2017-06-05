@@ -13,11 +13,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.travijuu.numberpicker.library.Enums.ActionEnum;
+import com.travijuu.numberpicker.library.Interface.ValueChangedListener;
+import com.travijuu.numberpicker.library.NumberPicker;
+
 import alitavana.com.tripro.AliPersianCalendar;
 import alitavana.com.tripro.R;
-import pl.polak.clicknumberpicker.ClickNumberPickerListener;
-import pl.polak.clicknumberpicker.ClickNumberPickerView;
-import pl.polak.clicknumberpicker.PickerClickType;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -131,21 +132,22 @@ public class FlightsActivity extends AppCompatActivity {
         });
         builder.show();
 
-        ClickNumberPickerView adault_number_picker = (ClickNumberPickerView) v.findViewById(R.id.adault_number_picker);
-        adault_number_picker.setPickerValue(Adault);
-        adault_number_picker.setClickNumberPickerListener(new ClickNumberPickerListener() {
+        NumberPicker adault_number_picker = (NumberPicker) v.findViewById(R.id.adault_number_picker);
+        adault_number_picker.setValue(Adault);
+        adault_number_picker.setValueChangedListener(new ValueChangedListener() {
             @Override
-            public void onValueChange(float previousValue, float currentValue, PickerClickType pickerClickType) {
-                Adault = (int) currentValue;
+            public void valueChanged(int value, ActionEnum action) {
+                Adault = value;
             }
         });
 
-        ClickNumberPickerView children_number_picker = (ClickNumberPickerView) v.findViewById(R.id.children_number_picker);
-        children_number_picker.setPickerValue(Children);
-        children_number_picker.setClickNumberPickerListener(new ClickNumberPickerListener() {
+        NumberPicker children_number_picker = (NumberPicker) v.findViewById(R.id.children_number_picker);
+        children_number_picker.setValue(Children);
+        children_number_picker.setValueChangedListener(new ValueChangedListener() {
             @Override
-            public void onValueChange(float previousValue, float currentValue, PickerClickType pickerClickType) {
-                Children = (int) currentValue;
+            public void valueChanged(int value, ActionEnum action) {
+                Children = value;
+
             }
         });
     }
@@ -168,15 +170,15 @@ public class FlightsActivity extends AppCompatActivity {
         flight_day.setText(dateVorood.getPersianDayName() + " " + dateVorood.getFullDateStyle() + " - "+ dateKhorooj.getPersianDayName()
             + " " + dateKhorooj.getFullDateStyle());
         flight_passenger_numbers.setText(Adault + Children + " مسافر");
-        if (MabdaCity.getName() != null) {
-            flight_mabda.setText(MabdaCity.getName());
-            flight_mabda_airport.setText(MabdaCity.getName());
-            flight_mabda_airport_location.setText(MabdaCity.getAirPort());
+        if (MabdaCity != null) {
+            flight_mabda.setText(MabdaCity);
+            flight_mabda_airport.setText("فرودگاه مبدا");
+            flight_mabda_airport_location.setText("فرودگاه مبدا");
         }
-        if (MaghsadCity.getName() != null) {
-            flight_maghsad.setText(MaghsadCity.getName());
-            flight_maghsad_airport.setText(MaghsadCity.getName());
-            flight_maghsad_airport_location.setText(MaghsadCity.getAirPort());
+        if (MaghsadCity != null) {
+            flight_maghsad.setText(MaghsadCity);
+            flight_maghsad_airport.setText("فرودگاه مقصد");
+            flight_maghsad_airport_location.setText("فرودگاه مقصد");
         }
     }
 }

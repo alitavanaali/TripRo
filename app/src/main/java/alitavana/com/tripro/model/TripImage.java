@@ -16,6 +16,9 @@ public class TripImage implements Serializable, Parcelable {
     private String name;
     private byte[] photoValue;
 
+    public TripImage() {
+    }
+
     public byte[] getPhotoValue() {
         return photoValue;
     }
@@ -58,6 +61,35 @@ public class TripImage implements Serializable, Parcelable {
         parcel.writeString (hash);
         parcel.writeString (downloadLink);
         parcel.writeString (name);
-        parcel.writeByteArray (photoValue);
+
+        parcel.writeInt(photoValue.length);
+        parcel.writeByteArray(photoValue);
     }
+
+    public TripImage (Parcel in)
+    {
+        //Log.d (TAG, "parcel in");
+        hash = in.readString ();
+        downloadLink = in.readString ();
+        name = in.readString ();
+
+        photoValue = new byte[in.readInt()];
+        in.readByteArray(photoValue);
+    }
+
+    public static final Parcelable.Creator<TripImage> CREATOR
+            = new Parcelable.Creator<TripImage>()
+    {
+        public TripImage createFromParcel(Parcel in)
+        {
+            //Log.d (TAG, "createFromParcel()");
+            return new TripImage(in);
+        }
+
+        public TripImage[] newArray (int size)
+        {
+            //Log.d (TAG, "createFromParcel() newArray ");
+            return new TripImage[size];
+        }
+    };
 }

@@ -16,6 +16,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.travijuu.numberpicker.library.NumberPicker;
 
 import alitavana.com.tripro.R;
 
@@ -29,6 +30,10 @@ String LOG_TAG = "testtest";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
+        NumberPicker numberPicker = (NumberPicker) findViewById(R.id.number_picker);
+        numberPicker.setMax(15);
+        numberPicker.setMin(5);
+        numberPicker.setValue(10);
 
 
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)

@@ -127,7 +127,6 @@ public class HotelsAdapter extends BaseAdapter {
 
 
                 } catch (Exception e) {
-
                     e.printStackTrace();
                 }
             } else {

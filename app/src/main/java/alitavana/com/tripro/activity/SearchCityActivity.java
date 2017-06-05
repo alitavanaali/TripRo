@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import alitavana.com.tripro.R;
 import alitavana.com.tripro.adapter.SearchCityAdapter;
+import alitavana.com.tripro.database.DatabaseHelper;
 import alitavana.com.tripro.model.City;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -37,11 +39,13 @@ import static alitavana.com.tripro.activity.MainActivity.MaghsadCity;
 public class SearchCityActivity extends AppCompatActivity {
     ListView city_search_recyclerview;
     SearchCityAdapter searchCityAdapter;
-    List<City> cityList = new ArrayList<>();
-    List<City> filteredCityList = new ArrayList<>();
+    List<String> cityList = new ArrayList<>();
+    List<String> filteredCityList = new ArrayList<>();
     TextView search_toolbar_clear_btn;
     EditText searchbox;
     Boolean isMaghsad;
+    Button city_current_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,17 +62,18 @@ public class SearchCityActivity extends AppCompatActivity {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
-        getComponents();
         prepareData();
+        getComponents();
         setAdapters();
         setOnClicks();
     }
 
     private void getComponents() {
         city_search_recyclerview = (ListView) findViewById(R.id.city_search_recyclerview);
-        /*searchCityAdapter = new SearchCityAdapter(this, cityList);*/
+        city_current_button = (Button) findViewById(R.id.city_current_button);
         search_toolbar_clear_btn = (TextView) findViewById(R.id.search_toolbar_clear_btn);
         searchbox = (EditText) findViewById(R.id.searchbox);
+        searchbox.setHint("نام استان، شهر یا مقصد");
     }
 
     private void setOnClicks() {
@@ -95,15 +100,14 @@ public class SearchCityActivity extends AppCompatActivity {
         city_search_recyclerview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                City city = (City) searchCityAdapter.getItem(position);
-                if (isMaghsad){
+                String city = (String) searchCityAdapter.getItem(position);
+                if (isMaghsad) {
                     MaghsadCity = city;
                     Log.i("SearchCity", "maghsad is: " + MaghsadCity);
                     finish();
-                }
-                else {
+                } else {
                     MabdaCity = city;
-                    Log.i("SearchCity", "mabda is:"  + MabdaCity);
+                    Log.i("SearchCity", "mabda is:" + MabdaCity);
                     finish();
                 }
             }
@@ -111,27 +115,13 @@ public class SearchCityActivity extends AppCompatActivity {
     }
 
     private void prepareData() {
-        City city1 = new City("اصفهان", "ایران", "فرودگاه اصفهان");
-        City city2 = new City("تهران", "ایران", "فرودگاه مهراباد");
-        City city3 = new City("گیلان", "ایران", "فرودگاه مرکزی");
-        City city4 = new City("مشهد", "ایران", "فرودگاه مهراباد");
-        City city5 = new City("کرمان", "ایران", "فرودگاه مهراباد");
-        City city6 = new City("چهارمحال بختیاری", "ایران", "فرودگاه مهراباد");
-        City city7 = new City("خوزستان", "ایران", "فرودگاه مهراباد");
-        City city8 = new City("البرز", "ایران", "فرودگاه مهراباد");
-
-        cityList.add(city1);
-        cityList.add(city2);
-        cityList.add(city3);
-        cityList.add(city4);
-        cityList.add(city5);
-        cityList.add(city6);
-        cityList.add(city7);
-        cityList.add(city8);
+        DatabaseHelper databaseHelper = new DatabaseHelper(this, getFilesDir().getAbsolutePath());
+        cityList = databaseHelper.getCities();
     }
 
     private void setAdapters() {
-        /*city_search_recyclerview.setAdapter(searchCityAdapter);*/
+        searchCityAdapter = new SearchCityAdapter(this, cityList);
+        city_search_recyclerview.setAdapter(searchCityAdapter);
     }
 
     @Override

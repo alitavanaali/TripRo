@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import alitavana.com.tripro.AliPersianCalendar;
 import alitavana.com.tripro.R;
 import alitavana.com.tripro.adapter.Top10DestinationAdapter;
 import alitavana.com.tripro.database.DatabaseHelper;
@@ -53,8 +54,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static Boolean IsPrice2 = false;
     public static Boolean IsPrice3 = false;
     public static Boolean IsPrice4 = false;
-    public static City MabdaCity = new City();
-    public static City MaghsadCity = new City();
+    public static String MabdaCity;
+    public static String MaghsadCity;
     public static PersianDate DateEnter;
     public static PersianDate DateExit;
     public static Boolean IsTwoWay = false;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void getComponents() {
         persianCalendar = new PersianCalendar();
         DateEnter = new PersianDate(persianCalendar.getPersianYear(), persianCalendar.getPersianMonth() + 1, persianCalendar.getPersianDay());
-        DateExit = new PersianDate(persianCalendar.getPersianYear(), persianCalendar.getPersianMonth() + 1, persianCalendar.getPersianDay());
+        DateExit = new AliPersianCalendar(1396,1,1).getTomorrow(DateEnter);
 
         top10DestinationAdapter = new Top10DestinationAdapter(this, destinationList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, true);
@@ -207,8 +209,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         main_children.setText(Children + "");
         main_adault.setText(Adault + "");
         main_room.setText(Room + "");
-        if (MaghsadCity.getName() != null)
-            main_location.setText(MaghsadCity.getName() + ", " + MaghsadCity.getCountry());
+        if (MaghsadCity != null)
+            main_location.setText(MaghsadCity + ", " + "ایران");
         else main_location.setText("انتخاب محل");
     }
 
@@ -236,7 +238,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.END);
         else
             super.onBackPressed();
-
     }
 }
 
